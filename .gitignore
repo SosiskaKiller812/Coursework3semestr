@@ -1,0 +1,35 @@
+# CMake build directories
+build/
+cmake-build-*/
+
+# Qt Creator user files
+*.autosave
+*.user
+*.user.*
+*.pro.user
+*.pro.user.*
+*.qbs.user
+*.qbs.user.*
+
+# Qt Creator backup files
+*.bak
+*.swp
+
+# Object files and binaries
+*.o
+*.obj
+*.so
+*.dll
+*.exe
+*.out
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# JSON state file
+system_state.json
