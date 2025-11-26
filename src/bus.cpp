@@ -76,8 +76,14 @@ bool Bus::isFull() const {
 }
 
 QString Bus::serialize() const {
-    QString typeStr = (m_type == BusType::Standard) ? "Standard" : 
-                      (m_type == BusType::Luxury) ? "Luxury" : "Express";
+    QString typeStr;
+    if (m_type == BusType::Standard) {
+        typeStr = "Standard";
+    } else if (m_type == BusType::Luxury) {
+        typeStr = "Luxury";
+    } else {
+        typeStr = "Express";
+    }
     QString driverName = m_driver ? m_driver->name() : "";
     
     return QString("%1|%2|%3|%4|%5")

@@ -170,10 +170,8 @@ void FileDatabase::saveCompanies() {
 
     // Создаем директорию если не существует
     QDir dir(m_folderPath);
-    if (!dir.exists()) {
-        if (!dir.mkpath(".")) {
-            throw DatabaseException(QString("Could not create data directory: %1").arg(m_folderPath));
-        }
+    if (!dir.exists() && !dir.mkpath(".")) {
+        throw DatabaseException(QString("Could not create data directory: %1").arg(m_folderPath));
     }
 
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {

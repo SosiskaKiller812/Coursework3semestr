@@ -3,8 +3,7 @@
 #include "discount.h"
 #include "passenger.h"
 
-PriceCalculator::PriceCalculator() {
-}
+PriceCalculator::PriceCalculator() = default;
 
 double PriceCalculator::calculateBasePrice(std::shared_ptr<Route> route) {
     if (!route) {

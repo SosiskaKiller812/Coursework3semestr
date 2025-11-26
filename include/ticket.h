@@ -59,7 +59,7 @@ private:
     std::shared_ptr<Trip> m_trip;
     int m_seatNumber;
     double m_price;
-    QString m_status; // "reserved", "paid", "cancelled"
+    QString m_status = "reserved"; // "reserved", "paid", "cancelled"
 };
 
 // Дружественная функция

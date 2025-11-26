@@ -3,8 +3,7 @@
 #include "passenger.h"
 #include "ValidationException.h"
 
-TicketValidator::TicketValidator() {
-}
+TicketValidator::TicketValidator() = default;
 
 bool TicketValidator::validateTicket(std::shared_ptr<Ticket> ticket) const {
     if (!ticket) {

@@ -2,7 +2,7 @@
 #include "passenger.h"
 
 Seat::Seat(int number, SeatType type, bool isAvailable)
-    : m_number(number), m_type(type), m_isAvailable(isAvailable), m_passenger(nullptr) {
+    : m_number(number), m_type(type), m_isAvailable(isAvailable) {
 }
 
 int Seat::number() const {
@@ -57,8 +57,14 @@ auto Seat::operator<=>(const Seat& other) const {
 }
 
 QString getSeatInfo(const Seat& seat) {
-    QString typeStr = (seat.m_type == Seat::SeatType::Window) ? "Window" :
-                      (seat.m_type == Seat::SeatType::Aisle) ? "Aisle" : "ExtraLegroom";
+    QString typeStr;
+    if (seat.m_type == Seat::SeatType::Window) {
+        typeStr = "Window";
+    } else if (seat.m_type == Seat::SeatType::Aisle) {
+        typeStr = "Aisle";
+    } else {
+        typeStr = "ExtraLegroom";
+    }
     QString status = seat.m_isAvailable ? "Available" : "Occupied";
     
     return QString("Seat #%1 (%2) - %3").arg(seat.m_number).arg(typeStr).arg(status);

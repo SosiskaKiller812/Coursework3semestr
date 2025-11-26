@@ -5,7 +5,7 @@ Payment::Payment(int id, std::shared_ptr<Ticket> ticket,
                  double amount, PaymentMethod method,
                  const QDateTime& paymentTime)
     : m_id(id), m_ticket(ticket), m_amount(amount), m_method(method),
-      m_paymentTime(paymentTime), m_status(PaymentStatus::Pending) {
+      m_paymentTime(paymentTime) {
 }
 
 int Payment::id() const {
@@ -90,11 +90,24 @@ auto Payment::operator<=>(const Payment& other) const {
 QString getPaymentInfo(const Payment& payment) {
     using enum Payment::PaymentMethod;
     using enum Payment::PaymentStatus;
-    QString methodStr = (payment.m_method == Cash) ? "Cash" :
-                        (payment.m_method == Card) ? "Card" : "Online";
-    QString statusStr = (payment.m_status == Pending) ? "Pending" :
-                        (payment.m_status == Completed) ? "Completed" :
-                        (payment.m_status == Failed) ? "Failed" : "Refunded";
+    QString methodStr;
+    if (payment.m_method == Cash) {
+        methodStr = "Cash";
+    } else if (payment.m_method == Card) {
+        methodStr = "Card";
+    } else {
+        methodStr = "Online";
+    }
+    QString statusStr;
+    if (payment.m_status == Pending) {
+        statusStr = "Pending";
+    } else if (payment.m_status == Completed) {
+        statusStr = "Completed";
+    } else if (payment.m_status == Failed) {
+        statusStr = "Failed";
+    } else {
+        statusStr = "Refunded";
+    }
     
     QString info = QString("Payment #%1\n").arg(payment.m_id);
     info += QString("Amount: %1\n").arg(payment.m_amount);

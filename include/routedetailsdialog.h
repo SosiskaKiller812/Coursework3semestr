@@ -10,5 +10,5 @@ public:
     explicit RouteDetailsDialog(const Route &route, QWidget *parent = nullptr);
 
 private:
-    QTextEdit *textInfo;
+    QTextEdit *textInfo = nullptr;
 };

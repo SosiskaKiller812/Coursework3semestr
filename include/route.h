@@ -35,7 +35,7 @@ public:
 
 private:
     QString m_name;
-    std::shared_ptr<Stop> m_head;
-    std::shared_ptr<Stop> m_tail;
+    std::shared_ptr<Stop> m_head = nullptr;
+    std::shared_ptr<Stop> m_tail = nullptr;
     QVector<std::shared_ptr<Trip>> m_trips;
 };

@@ -8,11 +8,10 @@
 #include <QIODevice>
 #include <fstream>
 
-ReportGenerator::ReportGenerator() {
-}
+ReportGenerator::ReportGenerator() = default;
 
 QString ReportGenerator::generateDailyReport(const QDate& date, const TicketOffice& office, 
-                                              const QVector<Company>& companies) const {
+                                              const QVector<Company>&) const {
     QString report;
     report += QString("═══════════════════════════════════════\n");
     report += QString("DAILY REPORT - %1\n").arg(formatDate(date));

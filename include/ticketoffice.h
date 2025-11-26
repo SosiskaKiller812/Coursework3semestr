@@ -30,8 +30,8 @@ public:
     QVector<std::shared_ptr<Ticket>> getTicketsByPassenger(std::shared_ptr<Passenger> passenger) const;
     QVector<std::shared_ptr<Ticket>> getTicketsByRoute(std::shared_ptr<Route> route) const;
     
-    bool cancelTicket(int ticketId);
-    bool refundTicket(int ticketId);
+    bool cancelTicket(int ticketId) const;
+    bool refundTicket(int ticketId) const;
     
     // Работа с бронированиями
     int createBooking(std::shared_ptr<Passenger> passenger,
@@ -52,7 +52,7 @@ public:
     QVector<std::shared_ptr<Payment>> getAllPayments() const;
     
     // Применение скидок
-    void applyDiscountToTicket(int ticketId, std::shared_ptr<Discount> discount);
+    void applyDiscountToTicket(int ticketId, std::shared_ptr<Discount> discount) const;
     
     // Статистика
     double totalRevenue() const;
@@ -72,9 +72,9 @@ private:
     QVector<std::shared_ptr<Ticket>> m_tickets;
     QVector<std::shared_ptr<Booking>> m_bookings;
     QVector<std::shared_ptr<Payment>> m_payments;
-    int m_nextTicketId;
-    int m_nextBookingId;
-    int m_nextPaymentId;
+    int m_nextTicketId = 1;
+    int m_nextBookingId = 1;
+    int m_nextPaymentId = 1;
 };
 
 

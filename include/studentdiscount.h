@@ -21,7 +21,7 @@ public:
     
 private:
     double m_percentage;
-    bool m_studentIdRequired;
+    bool m_studentIdRequired = true;
 };
 
 

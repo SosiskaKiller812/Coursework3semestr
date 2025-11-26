@@ -63,7 +63,7 @@ private:
     double m_amount;
     PaymentMethod m_method;
     QDateTime m_paymentTime;
-    PaymentStatus m_status;
+    PaymentStatus m_status = PaymentStatus::Pending;
     QString m_transactionId;
 };
 

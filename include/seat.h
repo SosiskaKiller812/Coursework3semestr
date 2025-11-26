@@ -41,7 +41,7 @@ private:
     int m_number;
     SeatType m_type;
     bool m_isAvailable;
-    std::shared_ptr<Passenger> m_passenger;
+    std::shared_ptr<Passenger> m_passenger = nullptr;
 };
 
 // Дружественная функция

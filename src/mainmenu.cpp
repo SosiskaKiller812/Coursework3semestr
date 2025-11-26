@@ -149,7 +149,7 @@ void MainMenu::refreshTrips()
     }
 
     // Сортируем по времени отправления (ближайшие сначала)
-    std::sort(filteredTrips.begin(), filteredTrips.end(),
+    std::ranges::sort(filteredTrips,
               [this](const auto &a, const auto &b) {
                   return getTripDeparture(a.first, a.second) <
                          getTripDeparture(b.first, b.second);
@@ -159,7 +159,7 @@ void MainMenu::refreshTrips()
     tableTrips->setSortingEnabled(false);
     tableTrips->setRowCount(filteredTrips.size());
 
-    for (int i = 0; i < filteredTrips.size(); ++i) {
+    for (qsizetype i = 0; i < filteredTrips.size(); ++i) {
         const auto &trip = filteredTrips[i].first;
         const auto &route = filteredTrips[i].second;
 
@@ -187,7 +187,7 @@ void MainMenu::refreshTrips()
     tableTrips->resizeColumnsToContents();
 }
 
-bool MainMenu::tripMatchesFilter(const std::shared_ptr<Trip>& trip, const std::shared_ptr<Route>& route, const QString& companyName) const
+bool MainMenu::tripMatchesFilter(const std::shared_ptr<Trip>&, const std::shared_ptr<Route>& route, const QString& companyName) const
 {
     QString searchText = searchEdit->text().toLower();
     QString selectedCompany = companyFilter->currentData().toString();
@@ -227,14 +227,13 @@ bool MainMenu::tripMatchesFilter(const std::shared_ptr<Trip>& trip, const std::s
     return true;
 }
 
-QDateTime MainMenu::getTripDeparture(const std::shared_ptr<Trip>& trip, const std::shared_ptr<Route>& route) const
+QDateTime MainMenu::getTripDeparture(const std::shared_ptr<Trip>& trip, const std::shared_ptr<Route>&) const
 {
     return trip->departure();
 }
 
 void MainMenu::onTripDoubleClicked(int row, int column)
 {
-    Q_UNUSED(column);
 
     // Находим маршрут для выбранного рейса
     QString routeName = tableTrips->item(row, 2)->text();
@@ -249,6 +248,7 @@ void MainMenu::onTripDoubleClicked(int row, int column)
                     return;
                 }
             }
+            break;
         }
     }
 }
@@ -266,8 +266,7 @@ void MainMenu::onSearchTextChanged()
     refreshTrips();
 }
 
-void MainMenu::onCompanyFilterChanged(int index)
+void MainMenu::onCompanyFilterChanged(int)
 {
-    Q_UNUSED(index);
     refreshTrips();
 }

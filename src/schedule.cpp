@@ -12,10 +12,11 @@ void Schedule::addTrip(std::shared_ptr<Route> route, std::shared_ptr<Trip> trip)
 }
 
 void Schedule::removeTrip(std::shared_ptr<Route> route, std::shared_ptr<Trip> trip) {
-    std::ranges::remove_if(m_schedule,
+    auto it = std::ranges::remove_if(m_schedule,
         [&route, &trip](const auto& pair) {
             return pair.first == route && pair.second == trip;
         });
+    m_schedule.erase(it.begin(), it.end());
 }
 
 QVector<std::pair<std::shared_ptr<Route>, std::shared_ptr<Trip>>> Schedule::getTripsByDate(const QDate& date) const {

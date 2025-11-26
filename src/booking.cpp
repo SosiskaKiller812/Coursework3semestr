@@ -97,9 +97,16 @@ auto Booking::operator<=>(const Booking& other) const {
 
 QString getBookingInfo(const Booking& booking) {
     using enum Booking::BookingStatus;
-    QString statusStr = (booking.m_status == Pending) ? "Pending" :
-                        (booking.m_status == Confirmed) ? "Confirmed" :
-                        (booking.m_status == Cancelled) ? "Cancelled" : "Expired";
+    QString statusStr;
+    if (booking.m_status == Pending) {
+        statusStr = "Pending";
+    } else if (booking.m_status == Confirmed) {
+        statusStr = "Confirmed";
+    } else if (booking.m_status == Cancelled) {
+        statusStr = "Cancelled";
+    } else {
+        statusStr = "Expired";
+    }
     
     QString info = QString("Booking #%1\n").arg(booking.m_id);
     if (booking.m_passenger) {

@@ -7,8 +7,7 @@ Logger& Logger::getInstance() {
     return instance;
 }
 
-Logger::Logger() {
-}
+Logger::Logger() = default;
 
 Logger::~Logger() {
     if (m_stream) {

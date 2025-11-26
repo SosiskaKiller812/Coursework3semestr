@@ -95,13 +95,13 @@ void EditRouteDialog::updateStopsTable(){
         tableStops->setItem(i, 2, new QTableWidgetItem(QString::number(stop->price, 'f', 2) + " руб"));
 
         // Создаем контейнер для кнопок остановки
-        QWidget *buttonsWidget = new QWidget(this);
-        QHBoxLayout *buttonsLayout = new QHBoxLayout(buttonsWidget);
+        auto *buttonsWidget = new QWidget(this);
+        auto *buttonsLayout = new QHBoxLayout(buttonsWidget);
         buttonsLayout->setContentsMargins(0, 0, 0, 0); // Убираем все отступы
         buttonsLayout->setSpacing(0); // Убираем расстояние между кнопками
 
         // Кнопка редактировать остановку
-        QPushButton *btnEdit = new QPushButton("✏️", this);
+        auto *btnEdit = new QPushButton("✏️", this);
         btnEdit->setFixedSize(25, 25);
         btnEdit->setToolTip("Редактировать остановку");
         connect(btnEdit, &QPushButton::clicked, this, [this, i]() {
@@ -109,7 +109,7 @@ void EditRouteDialog::updateStopsTable(){
         });
 
         // Кнопка удалить остановку
-        QPushButton *btnRemove = new QPushButton("❌", this);
+        auto *btnRemove = new QPushButton("❌", this);
         btnRemove->setFixedSize(25, 25);
         btnRemove->setToolTip("Удалить остановку");
         connect(btnRemove, &QPushButton::clicked, this, [this, i]() {
@@ -117,7 +117,7 @@ void EditRouteDialog::updateStopsTable(){
         });
 
         // Кнопка вверх
-        QPushButton *btnUp = new QPushButton("⬆️", this);
+        auto *btnUp = new QPushButton("⬆️", this);
         btnUp->setFixedSize(25, 25);
         btnUp->setToolTip("Переместить вверх");
         connect(btnUp, &QPushButton::clicked, this, [this, i]() {
@@ -125,7 +125,7 @@ void EditRouteDialog::updateStopsTable(){
         });
 
         // Кнопка вниз
-        QPushButton *btnDown = new QPushButton("⬇️", this);
+        auto *btnDown = new QPushButton("⬇️", this);
         btnDown->setFixedSize(25, 25);
         btnDown->setToolTip("Переместить вниз");
         connect(btnDown, &QPushButton::clicked, this, [this, i]() {
@@ -156,13 +156,13 @@ void EditRouteDialog::updateTripsTable(){
         tableTrips->setItem(i, 1, new QTableWidgetItem(trip->arrival(m_route).toString("dd.MM.yyyy HH:mm")));
 
         // Создаем контейнер для кнопок рейса
-        QWidget *buttonsWidget = new QWidget(this);
-        QHBoxLayout *buttonsLayout = new QHBoxLayout(buttonsWidget);
+        auto *buttonsWidget = new QWidget(this);
+        auto *buttonsLayout = new QHBoxLayout(buttonsWidget);
         buttonsLayout->setContentsMargins(0, 0, 0, 0); // Убираем все отступы
         buttonsLayout->setSpacing(0); // Убираем расстояние между кнопками
 
         // Кнопка редактировать рейс
-        QPushButton *btnEdit = new QPushButton("✏️", this);
+        auto *btnEdit = new QPushButton("✏️", this);
         btnEdit->setFixedSize(25, 25);
         btnEdit->setToolTip("Редактировать рейс");
         connect(btnEdit, &QPushButton::clicked, this, [this, i]() {
@@ -170,7 +170,7 @@ void EditRouteDialog::updateTripsTable(){
         });
 
         // Кнопка копировать рейс
-        QPushButton *btnCopy = new QPushButton("📋", this);
+        auto *btnCopy = new QPushButton("📋", this);
         btnCopy->setFixedSize(25, 25);
         btnCopy->setToolTip("Копировать рейс");
         connect(btnCopy, &QPushButton::clicked, this, [this, i]() {
@@ -178,7 +178,7 @@ void EditRouteDialog::updateTripsTable(){
         });
 
         // Кнопка удалить рейс
-        QPushButton *btnRemove = new QPushButton("❌", this);
+        auto *btnRemove = new QPushButton("❌", this);
         btnRemove->setFixedSize(25, 25);
         btnRemove->setToolTip("Удалить рейс");
         connect(btnRemove, &QPushButton::clicked, this, [this, i]() {
@@ -257,7 +257,7 @@ void EditRouteDialog::onMoveStopDown(int row){
 }
 
 void EditRouteDialog::onAddTrip(){
-    QDateTimeEdit *dtEdit = new QDateTimeEdit(QDateTime::currentDateTime(), this);
+    auto *dtEdit = new QDateTimeEdit(QDateTime::currentDateTime(), this);
     dtEdit->setDisplayFormat("dd.MM.yyyy HH:mm");
     dtEdit->setCalendarPopup(true);
 
@@ -283,7 +283,7 @@ void EditRouteDialog::onEditTrip(int row){
 
     auto trip = m_route.trips()[row];
 
-    QDateTimeEdit *dtEdit = new QDateTimeEdit(trip->departure(), this);
+    auto *dtEdit = new QDateTimeEdit(trip->departure(), this);
     dtEdit->setDisplayFormat("dd.MM.yyyy HH:mm");
     dtEdit->setCalendarPopup(true);
 

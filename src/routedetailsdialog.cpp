@@ -8,7 +8,6 @@
 
 RouteDetailsDialog::RouteDetailsDialog(const Route &route, QWidget *parent)
     : QDialog(parent)
-    , textInfo(nullptr)
 {
     textInfo = new QTextEdit(this);
     textInfo->setReadOnly(true);

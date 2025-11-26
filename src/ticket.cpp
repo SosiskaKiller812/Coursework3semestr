@@ -7,7 +7,7 @@ Ticket::Ticket(int id, std::shared_ptr<Passenger> passenger,
                std::shared_ptr<Trip> trip,
                int seatNumber, double price)
     : m_id(id), m_passenger(passenger), m_route(route), m_trip(trip),
-      m_seatNumber(seatNumber), m_price(price), m_status("reserved") {
+      m_seatNumber(seatNumber), m_price(price) {
 }
 
 int Ticket::id() const {

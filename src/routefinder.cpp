@@ -2,8 +2,7 @@
 #include "company.h"
 #include "trip.h"
 
-RouteFinder::RouteFinder() {
-}
+RouteFinder::RouteFinder() = default;
 
 QVector<std::shared_ptr<Route>> RouteFinder::findRoutes(const QString& fromCity, 
                                                           const QString& toCity,
@@ -27,7 +26,7 @@ QVector<QVector<std::shared_ptr<Route>>> RouteFinder::findRoutesWithTransfers(
     const QString& fromCity,
     const QString& toCity,
     const QVector<Company>& companies,
-    int maxTransfers) const {
+    int) const {
     QVector<QVector<std::shared_ptr<Route>>> result;
     // Упрощенная реализация поиска с пересадками
     auto directRoutes = findRoutes(fromCity, toCity, companies);
@@ -124,21 +123,18 @@ bool RouteFinder::routeContainsCity(std::shared_ptr<Route> route, const QString&
     if (!route) return false;
     
     auto stops = route->getAllStops();
-    for (const auto& stop : stops) {
-        if (stop && stop->city == city) {
-            return true;
-        }
-    }
-    return false;
+    return std::ranges::any_of(stops, [&city](const auto& stop) {
+        return stop && stop->city == city;
+    });
 }
 
 int RouteFinder::findCityPosition(std::shared_ptr<Route> route, const QString& city) const {
     if (!route) return -1;
     
     auto stops = route->getAllStops();
-    for (int i = 0; i < stops.size(); ++i) {
+    for (qsizetype i = 0; i < stops.size(); ++i) {
         if (stops[i] && stops[i]->city == city) {
-            return i;
+            return static_cast<int>(i);
         }
     }
     return -1;

@@ -2,12 +2,12 @@
 #include "RouteException.h"
 #include "trip.h"
 
-Route::Route(const QString &name) : m_name(name), m_head(nullptr), m_tail(nullptr) {}
+Route::Route(const QString &name) : m_name(name) {}
 
 Route::~Route() = default;
 
 Route::Route(const Route& other)
-    : m_name(other.m_name), m_head(nullptr), m_tail(nullptr) {
+    : m_name(other.m_name) {
 
     for (auto stop = other.m_head; stop; stop = stop->next) {
         addStop(stop->city, stop->durationMinutes, stop->price);
@@ -56,12 +56,13 @@ QString Route::info() const {
 
     text += "\nОстановки:\n";
     int stopNumber = 1;
-    for (auto s = m_head; s; s = s->next) {
+    for (auto s = m_head; s != nullptr;) {
         text += QString("%1. %2 - %3 мин, %4 руб\n")
                     .arg(stopNumber++)
                     .arg(s->city)
                     .arg(s->durationMinutes)
                     .arg(s->price);
+        s = s->next;
     }
 
     return text;
@@ -107,7 +108,7 @@ QString Route::detailedInfo() const {
     int accumulatedTime = 0;
     double accumulatedPrice = 0;
 
-    for (auto s = m_head; s; s = s->next) {
+    for (auto s = m_head; s != nullptr; s = s->next) {
         text += QString("   %1. %2\n")
                     .arg(stopNumber++, 2)
                     .arg(s->city);

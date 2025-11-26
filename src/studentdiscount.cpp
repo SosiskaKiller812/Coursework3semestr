@@ -2,7 +2,7 @@
 #include "passenger.h"
 
 StudentDiscount::StudentDiscount(double percentage)
-    : m_percentage(percentage), m_studentIdRequired(true) {
+    : m_percentage(percentage) {
 }
 
 double StudentDiscount::calculateDiscount(double basePrice, std::shared_ptr<Passenger> passenger) const {
