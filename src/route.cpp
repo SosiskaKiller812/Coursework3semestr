@@ -4,7 +4,7 @@
 
 Route::Route(const QString &name) : m_name(name) {}
 
-// Route::~Route() = default;
+Route::~Route() = default;
 
 
 Route::Route(const Route& other)

@@ -5,11 +5,6 @@
 #include <fstream>
 #include <QStringConverter>
 
-inline ConfigManager& ConfigManager::getInstance() {
-    static ConfigManager instance;
-    return instance;
-}
-
 ConfigManager::ConfigManager() = default;
 
 ConfigManager::~ConfigManager() = default;

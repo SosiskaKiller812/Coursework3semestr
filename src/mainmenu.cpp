@@ -254,7 +254,7 @@ void MainMenu::onTripDoubleClicked(int row, int /*column*/)
     }
 }
 
-void MainMenu::onManageRoutes()
+void MainMenu::onManageRoutes() const
 {
     auto *manageWindow = new MainWindow();
     manageWindow->setAttribute(Qt::WA_DeleteOnClose);

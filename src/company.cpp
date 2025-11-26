@@ -3,7 +3,7 @@
 
 Company::Company(const QString &name) : m_name(name) {}
 
-// Company::~Company() = default;
+Company::~Company() = default;
 
 
 Company::Company(const Company& other) : m_name(other.m_name) {

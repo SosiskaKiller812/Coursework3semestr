@@ -20,7 +20,7 @@ public:
 private slots:
     void refreshTrips();
     void onTripDoubleClicked(int row, int /*column*/);
-    void onManageRoutes();
+    void onManageRoutes() const;
     void onSearchTextChanged();
     void onCompanyFilterChanged(int index);
 

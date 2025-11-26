@@ -3,10 +3,6 @@
 #include <iostream>
 #include <QStringConverter>
 
-inline Logger& Logger::getInstance() {
-    static Logger instance;
-    return instance;
-}
 
 Logger::Logger() = default;
 
