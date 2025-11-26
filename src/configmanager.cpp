@@ -5,7 +5,7 @@
 #include <fstream>
 #include <QStringConverter>
 
-ConfigManager& ConfigManager::getInstance() {
+inline ConfigManager& ConfigManager::getInstance() {
     static ConfigManager instance;
     return instance;
 }

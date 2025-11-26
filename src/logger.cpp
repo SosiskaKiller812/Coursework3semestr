@@ -3,7 +3,7 @@
 #include <iostream>
 #include <QStringConverter>
 
-Logger& Logger::getInstance() {
+inline Logger& Logger::getInstance() {
     static Logger instance;
     return instance;
 }
