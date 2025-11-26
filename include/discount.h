@@ -23,7 +23,6 @@ public:
     
     // Перегрузка операций
     bool operator==(const Discount& other) const;
-    bool operator!=(const Discount& other) const;
     
 protected:
     Discount() = default;

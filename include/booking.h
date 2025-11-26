@@ -3,6 +3,7 @@
 #include <QDateTime>
 #include <QDate>
 #include <memory>
+#include <compare>
 
 class Passenger;
 class Route;
@@ -52,8 +53,7 @@ public:
     
     // Перегрузка операций
     bool operator==(const Booking& other) const;
-    bool operator!=(const Booking& other) const;
-    bool operator<(const Booking& other) const; // по времени бронирования
+    auto operator<=>(const Booking& other) const; // по времени бронирования
     
     // Дружественная функция для вывода
     friend QString getBookingInfo(const Booking& booking);
@@ -65,7 +65,7 @@ private:
     std::shared_ptr<Trip> m_trip;
     std::shared_ptr<Seat> m_seat;
     QDateTime m_bookingTime;
-    BookingStatus m_status;
+    BookingStatus m_status = BookingStatus::Pending;
 };
 
 // Дружественная функция

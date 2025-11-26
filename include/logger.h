@@ -46,8 +46,8 @@ private:
     Logger& operator=(const Logger&) = delete;
     
     QString m_logFile;
-    LogLevel m_logLevel;
-    bool m_consoleOutput;
+    LogLevel m_logLevel = LogLevel::Info;
+    bool m_consoleOutput = true;
     std::unique_ptr<QFile> m_file;
     std::unique_ptr<QTextStream> m_stream;
     std::mutex m_mutex;

@@ -103,12 +103,8 @@ bool Ticket::operator==(const Ticket& other) const {
     return m_id == other.m_id;
 }
 
-bool Ticket::operator!=(const Ticket& other) const {
-    return !(*this == other);
-}
-
-bool Ticket::operator<(const Ticket& other) const {
-    return m_id < other.m_id;
+auto Ticket::operator<=>(const Ticket& other) const {
+    return m_id <=> other.m_id;
 }
 
 QString formatTicketInfo(const Ticket& ticket) {

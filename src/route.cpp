@@ -4,6 +4,8 @@
 
 Route::Route(const QString &name) : m_name(name), m_head(nullptr), m_tail(nullptr) {}
 
+Route::~Route() = default;
+
 Route::Route(const Route& other)
     : m_name(other.m_name), m_head(nullptr), m_tail(nullptr) {
 

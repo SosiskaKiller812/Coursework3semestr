@@ -7,8 +7,7 @@ Logger& Logger::getInstance() {
     return instance;
 }
 
-Logger::Logger() 
-    : m_logLevel(LogLevel::Info), m_consoleOutput(true) {
+Logger::Logger() {
 }
 
 Logger::~Logger() {
@@ -77,18 +76,19 @@ Logger& Logger::operator<<(const QString& message) {
 }
 
 QString Logger::levelToString(LogLevel level) const {
+    using enum LogLevel;
     switch (level) {
-        case LogLevel::Debug: return "DEBUG";
-        case LogLevel::Info: return "INFO";
-        case LogLevel::Warning: return "WARNING";
-        case LogLevel::Error: return "ERROR";
-        case LogLevel::Critical: return "CRITICAL";
+        case Debug: return "DEBUG";
+        case Info: return "INFO";
+        case Warning: return "WARNING";
+        case Error: return "ERROR";
+        case Critical: return "CRITICAL";
         default: return "UNKNOWN";
     }
 }
 
 void Logger::writeLog(LogLevel level, const QString& message) {
-    std::lock_guard<std::mutex> lock(m_mutex);
+    std::scoped_lock lock(m_mutex);
     
     QString formatted = formatLogMessage(level, message);
     
@@ -103,13 +103,14 @@ void Logger::writeLog(LogLevel level, const QString& message) {
 }
 
 QString formatLogMessage(Logger::LogLevel level, const QString& message) {
+    using enum Logger::LogLevel;
     QString levelStr;
     switch (level) {
-        case Logger::LogLevel::Debug: levelStr = "DEBUG"; break;
-        case Logger::LogLevel::Info: levelStr = "INFO"; break;
-        case Logger::LogLevel::Warning: levelStr = "WARNING"; break;
-        case Logger::LogLevel::Error: levelStr = "ERROR"; break;
-        case Logger::LogLevel::Critical: levelStr = "CRITICAL"; break;
+        case Debug: levelStr = "DEBUG"; break;
+        case Info: levelStr = "INFO"; break;
+        case Warning: levelStr = "WARNING"; break;
+        case Error: levelStr = "ERROR"; break;
+        case Critical: levelStr = "CRITICAL"; break;
     }
     
     return QString("[%1] [%2] %3")

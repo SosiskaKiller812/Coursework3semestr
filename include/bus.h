@@ -46,7 +46,6 @@ public:
     
     // Перегрузка операций
     bool operator==(const Bus& other) const;
-    bool operator!=(const Bus& other) const;
     
     // Дружественная функция для вывода
     friend QString getBusInfo(const Bus& bus);
@@ -56,7 +55,7 @@ private:
     QString m_model;
     int m_capacity;
     BusType m_type;
-    std::shared_ptr<Driver> m_driver;
+    std::shared_ptr<Driver> m_driver = nullptr;
     QVector<std::shared_ptr<Seat>> m_seats;
 };
 

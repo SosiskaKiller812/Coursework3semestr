@@ -5,6 +5,7 @@
 #include <QString>
 #include <QDateTime>
 #include <memory>
+#include <compare>
 
 class Route;
 class Discount;
@@ -46,8 +47,7 @@ public:
     
     // Перегрузка операций
     bool operator==(const Ticket& other) const;
-    bool operator!=(const Ticket& other) const;
-    bool operator<(const Ticket& other) const;
+    auto operator<=>(const Ticket& other) const;
     
     // Дружественная функция для вывода
     friend QString formatTicketInfo(const Ticket& ticket);

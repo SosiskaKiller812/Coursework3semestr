@@ -9,11 +9,9 @@ ConfigManager& ConfigManager::getInstance() {
     return instance;
 }
 
-ConfigManager::ConfigManager() {
-}
+ConfigManager::ConfigManager() = default;
 
-ConfigManager::~ConfigManager() {
-}
+ConfigManager::~ConfigManager() = default;
 
 bool ConfigManager::loadFromFile(const QString& filename) {
     QFile file(filename);
@@ -148,17 +146,17 @@ ConfigManager& ConfigManager::operator+=(const std::pair<QString, QVariant>& ent
 
 QString ConfigManager::escapeValue(const QString& value) const {
     QString escaped = value;
-    escaped.replace("\\", "\\\\");
-    escaped.replace("=", "\\=");
-    escaped.replace("\n", "\\n");
+    escaped.replace(R"(\)", R"(\\)");
+    escaped.replace("=", R"(\=)");
+    escaped.replace("\n", R"(\n)");
     return escaped;
 }
 
 QString ConfigManager::unescapeValue(const QString& value) const {
     QString unescaped = value;
-    unescaped.replace("\\n", "\n");
-    unescaped.replace("\\=", "=");
-    unescaped.replace("\\\\", "\\");
+    unescaped.replace(R"(\n)", "\n");
+    unescaped.replace(R"(\=)", "=");
+    unescaped.replace(R"(\\)", R"(\)");
     return unescaped;
 }
 

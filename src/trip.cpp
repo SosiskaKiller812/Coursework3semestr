@@ -13,19 +13,6 @@ bool Trip::operator==(const Trip& other) const {
     return m_departure == other.m_departure;
 }
 
-bool Trip::operator!=(const Trip& other) const {
-    return !(*this == other);
-}
-
-bool Trip::operator<(const Trip& other) const {
-    return m_departure < other.m_departure;
-}
-
-bool Trip::operator>(const Trip& other) const {
-    return m_departure > other.m_departure;
-}
-
-QDebug operator<<(QDebug debug, const Trip& trip) {
-    debug.nospace() << "Trip(departure=" << trip.m_departure.toString("dd.MM.yyyy HH:mm") << ")";
-    return debug;
+auto Trip::operator<=>(const Trip& other) const {
+    return m_departure <=> other.m_departure;
 }

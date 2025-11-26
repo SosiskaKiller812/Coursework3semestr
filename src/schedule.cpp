@@ -1,9 +1,9 @@
 #include "schedule.h"
 #include "route.h"
 #include "trip.h"
+#include <ranges>
 
-Schedule::Schedule() {
-}
+Schedule::Schedule() = default;
 
 void Schedule::addTrip(std::shared_ptr<Route> route, std::shared_ptr<Trip> trip) {
     if (route && trip) {
@@ -12,10 +12,10 @@ void Schedule::addTrip(std::shared_ptr<Route> route, std::shared_ptr<Trip> trip)
 }
 
 void Schedule::removeTrip(std::shared_ptr<Route> route, std::shared_ptr<Trip> trip) {
-    m_schedule.erase(std::remove_if(m_schedule.begin(), m_schedule.end(),
+    std::ranges::remove_if(m_schedule,
         [&route, &trip](const auto& pair) {
             return pair.first == route && pair.second == trip;
-        }), m_schedule.end());
+        });
 }
 
 QVector<std::pair<std::shared_ptr<Route>, std::shared_ptr<Trip>>> Schedule::getTripsByDate(const QDate& date) const {
@@ -57,7 +57,7 @@ QVector<std::pair<std::shared_ptr<Route>, std::shared_ptr<Trip>>> Schedule::getA
 }
 
 void Schedule::sortByDepartureTime() {
-    std::sort(m_schedule.begin(), m_schedule.end(),
+    std::ranges::sort(m_schedule,
         [](const auto& a, const auto& b) {
             if (!a.second || !b.second) return false;
             return a.second->departure() < b.second->departure();
@@ -65,7 +65,7 @@ void Schedule::sortByDepartureTime() {
 }
 
 void Schedule::sortByRoute() {
-    std::sort(m_schedule.begin(), m_schedule.end(),
+    std::ranges::sort(m_schedule,
         [](const auto& a, const auto& b) {
             if (!a.first || !b.first) return false;
             return a.first->name() < b.first->name();
@@ -93,9 +93,9 @@ Schedule& Schedule::operator+=(const std::pair<std::shared_ptr<Route>, std::shar
     return *this;
 }
 
-Schedule Schedule::operator+(const Schedule& other) const {
-    Schedule result = *this;
-    for (const auto& item : other.m_schedule) {
+Schedule operator+(const Schedule& lhs, const Schedule& rhs) {
+    Schedule result = lhs;
+    for (const auto& item : rhs.m_schedule) {
         result.addTrip(item.first, item.second);
     }
     return result;
@@ -103,11 +103,11 @@ Schedule Schedule::operator+(const Schedule& other) const {
 
 QString getScheduleInfo(const Schedule& schedule) {
     QString info = QString("Schedule contains %1 trips\n").arg(schedule.m_schedule.size());
-    for (const auto& pair : schedule.m_schedule) {
-        if (pair.first && pair.second) {
+    for (const auto& [route, trip] : schedule.m_schedule) {
+        if (route && trip) {
             info += QString("Route: %1, Departure: %2\n")
-                .arg(pair.first->name())
-                .arg(pair.second->departure().toString("dd.MM.yyyy HH:mm"));
+                .arg(route->name())
+                .arg(trip->departure().toString("dd.MM.yyyy HH:mm"));
         }
     }
     return info;

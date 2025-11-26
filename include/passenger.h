@@ -28,7 +28,6 @@ public:
     
     // Перегрузка операций
     bool operator==(const Passenger& other) const;
-    bool operator!=(const Passenger& other) const;
     
     // Дружественная функция для вывода
     friend class Ticket;

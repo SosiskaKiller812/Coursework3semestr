@@ -10,7 +10,7 @@ Booking::Booking(int id, std::shared_ptr<Passenger> passenger,
                  std::shared_ptr<Seat> seat,
                  const QDateTime& bookingTime)
     : m_id(id), m_passenger(passenger), m_route(route), m_trip(trip),
-      m_seat(seat), m_bookingTime(bookingTime), m_status(BookingStatus::Pending) {
+      m_seat(seat), m_bookingTime(bookingTime) {
 }
 
 int Booking::id() const {
@@ -91,18 +91,15 @@ bool Booking::operator==(const Booking& other) const {
     return m_id == other.m_id;
 }
 
-bool Booking::operator!=(const Booking& other) const {
-    return !(*this == other);
-}
-
-bool Booking::operator<(const Booking& other) const {
-    return m_bookingTime < other.m_bookingTime;
+auto Booking::operator<=>(const Booking& other) const {
+    return m_bookingTime <=> other.m_bookingTime;
 }
 
 QString getBookingInfo(const Booking& booking) {
-    QString statusStr = (booking.m_status == Booking::BookingStatus::Pending) ? "Pending" :
-                        (booking.m_status == Booking::BookingStatus::Confirmed) ? "Confirmed" :
-                        (booking.m_status == Booking::BookingStatus::Cancelled) ? "Cancelled" : "Expired";
+    using enum Booking::BookingStatus;
+    QString statusStr = (booking.m_status == Pending) ? "Pending" :
+                        (booking.m_status == Confirmed) ? "Confirmed" :
+                        (booking.m_status == Cancelled) ? "Cancelled" : "Expired";
     
     QString info = QString("Booking #%1\n").arg(booking.m_id);
     if (booking.m_passenger) {

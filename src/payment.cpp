@@ -83,20 +83,18 @@ bool Payment::operator==(const Payment& other) const {
     return m_id == other.m_id;
 }
 
-bool Payment::operator!=(const Payment& other) const {
-    return !(*this == other);
-}
-
-bool Payment::operator<(const Payment& other) const {
-    return m_paymentTime < other.m_paymentTime;
+auto Payment::operator<=>(const Payment& other) const {
+    return m_paymentTime <=> other.m_paymentTime;
 }
 
 QString getPaymentInfo(const Payment& payment) {
-    QString methodStr = (payment.m_method == Payment::PaymentMethod::Cash) ? "Cash" :
-                        (payment.m_method == Payment::PaymentMethod::Card) ? "Card" : "Online";
-    QString statusStr = (payment.m_status == Payment::PaymentStatus::Pending) ? "Pending" :
-                        (payment.m_status == Payment::PaymentStatus::Completed) ? "Completed" :
-                        (payment.m_status == Payment::PaymentStatus::Failed) ? "Failed" : "Refunded";
+    using enum Payment::PaymentMethod;
+    using enum Payment::PaymentStatus;
+    QString methodStr = (payment.m_method == Cash) ? "Cash" :
+                        (payment.m_method == Card) ? "Card" : "Online";
+    QString statusStr = (payment.m_status == Pending) ? "Pending" :
+                        (payment.m_status == Completed) ? "Completed" :
+                        (payment.m_status == Failed) ? "Failed" : "Refunded";
     
     QString info = QString("Payment #%1\n").arg(payment.m_id);
     info += QString("Amount: %1\n").arg(payment.m_amount);

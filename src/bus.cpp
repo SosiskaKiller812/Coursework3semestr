@@ -5,7 +5,7 @@
 Bus::Bus(const QString& licensePlate, const QString& model, 
          int capacity, BusType type)
     : m_licensePlate(licensePlate), m_model(model), 
-      m_capacity(capacity), m_type(type), m_driver(nullptr) {
+      m_capacity(capacity), m_type(type) {
     // Инициализация мест
     for (int i = 1; i <= capacity; ++i) {
         Seat::SeatType seatType = (i % 2 == 0) ? Seat::SeatType::Window : Seat::SeatType::Aisle;
@@ -94,13 +94,14 @@ void Bus::deserialize(const QString& line) {
         m_model = parts[1];
         m_capacity = parts[2].toInt();
         
+        using enum BusType;
         QString typeStr = parts[3];
         if (typeStr == "Luxury") {
-            m_type = BusType::Luxury;
+            m_type = Luxury;
         } else if (typeStr == "Express") {
-            m_type = BusType::Express;
+            m_type = Express;
         } else {
-            m_type = BusType::Standard;
+            m_type = Standard;
         }
         // Водитель должен быть восстановлен из базы данных
     }
@@ -108,10 +109,6 @@ void Bus::deserialize(const QString& line) {
 
 bool Bus::operator==(const Bus& other) const {
     return m_licensePlate == other.m_licensePlate;
-}
-
-bool Bus::operator!=(const Bus& other) const {
-    return !(*this == other);
 }
 
 QString getBusInfo(const Bus& bus) {

@@ -4,6 +4,7 @@
 #include <QDate>
 #include <QVector>
 #include <memory>
+#include <compare>
 
 class Bus;
 
@@ -36,8 +37,7 @@ public:
     
     // Перегрузка операций
     bool operator==(const Driver& other) const;
-    bool operator!=(const Driver& other) const;
-    bool operator<(const Driver& other) const; // по опыту
+    auto operator<=>(const Driver& other) const; // по опыту
     
     // Дружественная функция для вывода
     friend QString getDriverInfo(const Driver& driver);

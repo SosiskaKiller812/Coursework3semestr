@@ -1,6 +1,7 @@
 #pragma once
 #include <QString>
 #include <memory>
+#include <compare>
 
 class Passenger;
 
@@ -31,8 +32,7 @@ public:
     
     // Перегрузка операций
     bool operator==(const Seat& other) const;
-    bool operator!=(const Seat& other) const;
-    bool operator<(const Seat& other) const; // по номеру
+    auto operator<=>(const Seat& other) const; // по номеру
     
     // Дружественная функция для вывода
     friend QString getSeatInfo(const Seat& seat);

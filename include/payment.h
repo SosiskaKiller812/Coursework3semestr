@@ -2,6 +2,7 @@
 #include <QString>
 #include <QDateTime>
 #include <memory>
+#include <compare>
 
 class Ticket;
 
@@ -51,8 +52,7 @@ public:
     
     // Перегрузка операций
     bool operator==(const Payment& other) const;
-    bool operator!=(const Payment& other) const;
-    bool operator<(const Payment& other) const; // по времени платежа
+    auto operator<=>(const Payment& other) const; // по времени платежа
     
     // Дружественная функция для вывода
     friend QString getPaymentInfo(const Payment& payment);

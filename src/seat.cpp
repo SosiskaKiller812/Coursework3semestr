@@ -52,12 +52,8 @@ bool Seat::operator==(const Seat& other) const {
     return m_number == other.m_number;
 }
 
-bool Seat::operator!=(const Seat& other) const {
-    return !(*this == other);
-}
-
-bool Seat::operator<(const Seat& other) const {
-    return m_number < other.m_number;
+auto Seat::operator<=>(const Seat& other) const {
+    return m_number <=> other.m_number;
 }
 
 QString getSeatInfo(const Seat& seat) {

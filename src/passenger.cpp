@@ -59,8 +59,4 @@ bool Passenger::operator==(const Passenger& other) const {
     return m_passport == other.m_passport;
 }
 
-bool Passenger::operator!=(const Passenger& other) const {
-    return !(*this == other);
-}
-
 

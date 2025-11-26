@@ -75,12 +75,8 @@ bool Driver::operator==(const Driver& other) const {
     return m_licenseNumber == other.m_licenseNumber;
 }
 
-bool Driver::operator!=(const Driver& other) const {
-    return !(*this == other);
-}
-
-bool Driver::operator<(const Driver& other) const {
-    return m_experienceYears < other.m_experienceYears;
+auto Driver::operator<=>(const Driver& other) const {
+    return m_experienceYears <=> other.m_experienceYears;
 }
 
 QString getDriverInfo(const Driver& driver) {
