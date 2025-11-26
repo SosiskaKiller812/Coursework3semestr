@@ -4,6 +4,6 @@
 
 class DatabaseException : public std::runtime_error {
 public:
-    DatabaseException(const QString& message)
+    explicit DatabaseException(const QString& message)
         : std::runtime_error(message.toStdString()) {}
 };

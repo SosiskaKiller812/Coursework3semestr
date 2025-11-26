@@ -11,10 +11,10 @@ class Discount;
 
 class Ticket : public ISerializable {
 public:
-    Ticket(int id = 0, std::shared_ptr<Passenger> passenger = nullptr, 
-           std::shared_ptr<Route> route = nullptr, 
-           std::shared_ptr<Trip> trip = nullptr,
-           int seatNumber = 0, double price = 0.0);
+    explicit Ticket(int id = 0, std::shared_ptr<Passenger> passenger = nullptr, 
+                    std::shared_ptr<Route> route = nullptr, 
+                    std::shared_ptr<Trip> trip = nullptr,
+                    int seatNumber = 0, double price = 0.0);
     ~Ticket() override = default;
     
     int id() const;

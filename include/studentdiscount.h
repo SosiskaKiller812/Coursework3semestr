@@ -7,7 +7,7 @@ class Passenger;
 
 class StudentDiscount : public Discount {
 public:
-    StudentDiscount(double percentage = 10.0);
+    explicit StudentDiscount(double percentage = 10.0);
     ~StudentDiscount() override = default;
     
     double calculateDiscount(double basePrice, std::shared_ptr<Passenger> passenger = nullptr) const override;

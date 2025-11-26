@@ -15,8 +15,8 @@ public:
         Express
     };
     
-    Bus(const QString& licensePlate = "", const QString& model = "", 
-        int capacity = 0, BusType type = BusType::Standard);
+    explicit Bus(const QString& licensePlate = "", const QString& model = "", 
+                 int capacity = 0, BusType type = BusType::Standard);
     ~Bus() override = default;
     
     QString licensePlate() const;

@@ -9,8 +9,8 @@ class Bus;
 
 class Driver : public ISerializable {
 public:
-    Driver(const QString& name = "", const QString& licenseNumber = "", 
-           const QDate& licenseExpiry = QDate(), int experienceYears = 0);
+    explicit Driver(const QString& name = "", const QString& licenseNumber = "", 
+                    const QDate& licenseExpiry = QDate(), int experienceYears = 0);
     ~Driver() override = default;
     
     QString name() const;

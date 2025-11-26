@@ -7,7 +7,7 @@
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
-    app.setStyle(QStyleFactory::create("Fusion"));
+    QApplication::setStyle(QStyleFactory::create("Fusion"));
 
     QPalette darkPalette;
     darkPalette.setColor(QPalette::Window, QColor(53,53,53));
@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
     darkPalette.setColor(QPalette::Highlight, QColor(117, 116, 116).lighter());
     darkPalette.setColor(QPalette::HighlightedText, Qt::black);
 
-    app.setPalette(darkPalette);
+    QApplication::setPalette(darkPalette);
 
     app.setStyleSheet("QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }");
 
@@ -32,5 +32,5 @@ int main(int argc, char *argv[]) {
     MainMenu mainMenu;
     mainMenu.show();
 
-    return app.exec();
+    return QApplication::exec();
 }

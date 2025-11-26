@@ -6,7 +6,7 @@ class Route;
 
 class Trip {
 public:
-    Trip(const QDateTime &departure = QDateTime());
+    explicit Trip(const QDateTime &departure = QDateTime());
 
     QDateTime departure() const;
     QDateTime arrival(const Route &route) const;

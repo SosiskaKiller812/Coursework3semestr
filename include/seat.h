@@ -12,7 +12,7 @@ public:
         ExtraLegroom
     };
     
-    Seat(int number = 0, SeatType type = SeatType::Window, bool isAvailable = true);
+    explicit Seat(int number = 0, SeatType type = SeatType::Window, bool isAvailable = true);
     ~Seat() = default;
     
     int number() const;

@@ -7,7 +7,7 @@ class Passenger;
 
 class SeniorDiscount : public Discount {
 public:
-    SeniorDiscount(double percentage = 15.0, int minAge = 60);
+    explicit SeniorDiscount(double percentage = 15.0, int minAge = 60);
     ~SeniorDiscount() override = default;
     
     double calculateDiscount(double basePrice, std::shared_ptr<Passenger> passenger = nullptr) const override;

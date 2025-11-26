@@ -20,9 +20,9 @@ public:
         Refunded
     };
     
-    Payment(int id = 0, std::shared_ptr<Ticket> ticket = nullptr,
-            double amount = 0.0, PaymentMethod method = PaymentMethod::Cash,
-            const QDateTime& paymentTime = QDateTime());
+    explicit Payment(int id = 0, std::shared_ptr<Ticket> ticket = nullptr,
+                     double amount = 0.0, PaymentMethod method = PaymentMethod::Cash,
+                     const QDateTime& paymentTime = QDateTime());
     ~Payment() = default;
     
     int id() const;

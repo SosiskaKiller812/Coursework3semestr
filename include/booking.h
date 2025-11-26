@@ -18,11 +18,11 @@ public:
         Expired
     };
     
-    Booking(int id = 0, std::shared_ptr<Passenger> passenger = nullptr,
-            std::shared_ptr<Route> route = nullptr,
-            std::shared_ptr<Trip> trip = nullptr,
-            std::shared_ptr<Seat> seat = nullptr,
-            const QDateTime& bookingTime = QDateTime());
+    explicit Booking(int id = 0, std::shared_ptr<Passenger> passenger = nullptr,
+                     std::shared_ptr<Route> route = nullptr,
+                     std::shared_ptr<Trip> trip = nullptr,
+                     std::shared_ptr<Seat> seat = nullptr,
+                     const QDateTime& bookingTime = QDateTime());
     ~Booking() = default;
     
     int id() const;

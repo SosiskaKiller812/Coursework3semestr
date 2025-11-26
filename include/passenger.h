@@ -8,7 +8,7 @@ class Ticket;
 
 class Passenger : public ISerializable {
 public:
-    Passenger(const QString& name = "", const QString& passport = "", const QDate& birthDate = QDate());
+    explicit Passenger(const QString& name = "", const QString& passport = "", const QDate& birthDate = QDate());
     ~Passenger() override = default;
 
     QString name() const;

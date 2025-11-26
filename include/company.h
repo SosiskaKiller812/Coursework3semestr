@@ -7,7 +7,7 @@ class Route;
 
 class Company {
 public:
-    Company(const QString &name = "");
+    explicit Company(const QString &name = "");
     ~Company();
     Company(const Company& other);
     Company& operator=(const Company& other);

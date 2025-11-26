@@ -4,6 +4,6 @@
 
 class RouteException : public std::runtime_error {
 public:
-    RouteException(const QString& message)
+    explicit RouteException(const QString& message)
         : std::runtime_error(message.toStdString()) {}
 };
