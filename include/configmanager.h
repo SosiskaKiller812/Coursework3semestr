@@ -9,10 +9,7 @@
 
 class ConfigManager {
 public:
-    inline static ConfigManager& getInstance() {
-        static ConfigManager instance;
-        return instance;
-    }
+    static ConfigManager& instance;
 
     // Загрузка и сохранение конфигурации
     bool loadFromFile(const QString& filename);

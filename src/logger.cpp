@@ -6,6 +6,11 @@
 
 Logger::Logger() = default;
 
+Logger& Logger::instance = []() -> Logger& {
+    static Logger instance;
+    return instance;
+}();
+
 Logger::~Logger() {
     if (m_stream) {
         m_stream->flush();

@@ -16,11 +16,7 @@ public:
         Error,
         Critical
     };
-
-    inline static Logger& getInstance() {
-        static Logger instance;
-        return instance;
-    }
+    static Logger& instance;
 
     void setLogFile(const QString& filename);
     void setLogLevel(LogLevel level);
