@@ -330,7 +330,5 @@ void FileDatabase::performAutoSave() {
         // Можно показать сообщение пользователю или записать в лог
     } catch (const ValidationException& e) {
         qCritical() << "Auto-save validation failed:" << e.what();
-    } catch (const std::runtime_error& e) {
-        qCritical() << "Unexpected runtime error during auto-save:" << e.what();
     }
 }

@@ -12,7 +12,8 @@ int TicketOffice::createTicket(std::shared_ptr<Passenger> passenger,
                                 std::shared_ptr<Trip> trip,
                                 int seatNumber,
                                 double price) {
-    const int ticketId = m_nextTicketId++;
+    const int ticketId = m_nextTicketId;
+    ++m_nextTicketId;
     auto ticket = std::make_shared<Ticket>(ticketId, passenger, route, trip, seatNumber, price);
     m_tickets.append(ticket);
     return ticketId;
@@ -72,7 +73,8 @@ int TicketOffice::createBooking(std::shared_ptr<Passenger> passenger,
                                  std::shared_ptr<Route> route,
                                  std::shared_ptr<Trip> trip,
                                  std::shared_ptr<Seat> seat) {
-    const int bookingId = m_nextBookingId++;
+    const int bookingId = m_nextBookingId;
+    ++m_nextBookingId;
     auto booking = std::make_shared<Booking>(bookingId, passenger, route, trip, seat);
     if (seat) {
         seat->reserve(passenger);
@@ -108,7 +110,8 @@ void TicketOffice::processExpiredBookings() const {
 int TicketOffice::createPayment(std::shared_ptr<Ticket> ticket,
                                  double amount,
                                  Payment::PaymentMethod method) {
-    const int paymentId = m_nextPaymentId++;
+    const int paymentId = m_nextPaymentId;
+    ++m_nextPaymentId;
     auto payment = std::make_shared<Payment>(paymentId, ticket, amount, method);
     payment->process();
     m_payments.append(payment);

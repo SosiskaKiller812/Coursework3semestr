@@ -159,9 +159,8 @@ void MainMenu::refreshTrips()
     tableTrips->setSortingEnabled(false);
     tableTrips->setRowCount(filteredTrips.size());
 
-    for (qsizetype i = 0; i < filteredTrips.size(); ++i) {
-        const auto &trip = filteredTrips[i].first;
-        const auto &route = filteredTrips[i].second;
+    qsizetype i = 0;
+    for (const auto &[trip, route] : filteredTrips) {
 
         // Находим компанию для этого маршрута
         QString companyName;
@@ -180,6 +179,7 @@ void MainMenu::refreshTrips()
         tableTrips->setItem(i, 2, new QTableWidgetItem(route->name()));
         tableTrips->setItem(i, 3, new QTableWidgetItem(companyName));
         tableTrips->setItem(i, 4, new QTableWidgetItem(QString::number(route->totalDuration()) + " мин"));
+        ++i;
         tableTrips->setItem(i, 5, new QTableWidgetItem(QString::number(route->totalPrice(), 'f', 2) + " руб"));
     }
 
@@ -240,16 +240,17 @@ void MainMenu::onTripDoubleClicked(int row, int /*column*/)
     QString companyName = tableTrips->item(row, 3)->text();
 
     for (const auto &company : companies) {
-        if (company.name() == companyName) {
-            for (const auto &route : company.routes()) {
-                if (route->name() == routeName) {
-                    RouteDetailsDialog dlg(*route, this);
-                    dlg.exec();
-                    return;
-                }
-            }
-            break;
+        if (company.name() != companyName) {
+            continue;
         }
+        for (const auto &route : company.routes()) {
+            if (route->name() == routeName) {
+                RouteDetailsDialog dlg(*route, this);
+                dlg.exec();
+                return;
+            }
+        }
+        break;
     }
 }
 

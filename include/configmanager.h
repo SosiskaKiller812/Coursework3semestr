@@ -10,7 +10,6 @@
 class ConfigManager {
 public:
     inline static ConfigManager& getInstance() {
-        static ConfigManager instance;
         return instance;
     }
     
@@ -53,6 +52,8 @@ private:
     ~ConfigManager();
     ConfigManager(const ConfigManager&) = delete;
     ConfigManager& operator=(const ConfigManager&) = delete;
+    
+    inline static ConfigManager instance;
     
     QHash<QString, QVariant> m_config;
     

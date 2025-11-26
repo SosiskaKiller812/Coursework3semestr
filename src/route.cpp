@@ -4,6 +4,8 @@
 
 Route::Route(const QString &name) : m_name(name) {}
 
+Route::~Route() = default;
+
 
 Route::Route(const Route& other)
     : m_name(other.m_name) {
@@ -210,8 +212,10 @@ std::shared_ptr<Stop> Route::getStop(int position) const {
     }
 
     auto current = m_head;
-    for (int i = 0; i < position && current; ++i) {
+    int i = 0;
+    while (i < position && current) {
         current = current->next;
+        ++i;
     }
     return current;
 }

@@ -18,7 +18,6 @@ public:
     };
     
     inline static Logger& getInstance() {
-        static Logger instance;
         return instance;
     }
     
@@ -47,6 +46,8 @@ private:
     ~Logger();
     Logger(const Logger&) = delete;
     Logger& operator=(const Logger&) = delete;
+    
+    inline static Logger instance;
     
     QString m_logFile;
     LogLevel m_logLevel = LogLevel::Info;

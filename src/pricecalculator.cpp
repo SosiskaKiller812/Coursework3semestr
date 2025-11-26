@@ -2,6 +2,7 @@
 #include "route.h"
 #include "discount.h"
 #include "passenger.h"
+#include <algorithm>
 
 PriceCalculator::PriceCalculator() = default;
 
@@ -38,7 +39,8 @@ double PriceCalculator::calculateSegmentPrice(std::shared_ptr<Route> route,
         return 0.0;
     }
     
-    for (int i = fromStop; i < toStop && i < stops.size(); ++i) {
+    const int endIndex = std::min(toStop, static_cast<int>(stops.size()));
+    for (int i = fromStop; i < endIndex; ++i) {
         if (stops[i]) {
             price += stops[i]->price;
         }

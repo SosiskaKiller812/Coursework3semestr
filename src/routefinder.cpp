@@ -132,10 +132,12 @@ int RouteFinder::findCityPosition(std::shared_ptr<Route> route, const QString& c
     if (!route) return -1;
     
     auto stops = route->getAllStops();
-    for (qsizetype i = 0; i < stops.size(); ++i) {
-        if (stops[i] && stops[i]->city == city) {
+    qsizetype i = 0;
+    for (const auto& stop : stops) {
+        if (stop && stop->city == city) {
             return static_cast<int>(i);
         }
+        ++i;
     }
     return -1;
 }
