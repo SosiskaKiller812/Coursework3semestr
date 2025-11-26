@@ -147,6 +147,27 @@ void FileDatabase::saveCompanies() {
     qDebug() << "Data saved successfully to" << file.fileName();
 }
 
+void FileDatabase::validateCompany(const Company& company, QSet<QString>& companyNames) const {
+    if (company.name().isEmpty()) {
+        throw ValidationException("Found company with empty name");
+    }
+
+    if (companyNames.contains(company.name())) {
+        throw ValidationException(QString("Duplicate company name: %1").arg(company.name()));
+    }
+    companyNames.insert(company.name());
+
+    const auto &routes = company.routes();
+    if (routes.isEmpty()) {
+        qWarning() << "Company" << company.name() << "has no routes";
+    }
+
+    QSet<QString> routeNames;
+    for (const auto &route : routes) {
+        validateRoute(route, company.name(), routeNames);
+    }
+}
+
 void FileDatabase::validateCompanies(const QVector<Company> &companies) const {
     if (companies.isEmpty()) {
         throw ValidationException("No companies to save");
@@ -158,27 +179,6 @@ void FileDatabase::validateCompanies(const QVector<Company> &companies) const {
     }
 }
 
-void FileDatabase::validateCompany(const Company& company, QSet<QString>& companyNames) const {
-    if (company.name().isEmpty()) {
-        throw ValidationException("Found company with empty name");
-    }
-
-    if (companyNames.contains(company.name())) {
-        throw ValidationException(QString("Duplicate company name: %1").arg(company.name()));
-    }
-    companyNames.insert(company.name());
-
-    // Проверяем маршруты компании
-    const auto &routes = company.routes();
-    if (routes.isEmpty()) {
-        qWarning() << "Company" << company.name() << "has no routes";
-    }
-
-    QSet<QString> routeNames;
-    for (const auto &route : routes) {
-        validateRoute(route, company.name(), routeNames);
-    }
-}
 
 void FileDatabase::validateRoute(const std::shared_ptr<Route>& route, const QString& companyName, QSet<QString>& routeNames) const {
     if (route->name().isEmpty()) {
@@ -303,7 +303,7 @@ void FileDatabase::processRouteLine(const QString& line, int lineNumber, Company
     currentRoute = std::make_shared<Route>(routeName);
 }
 
-void FileDatabase::processStopLine(const QString& line, int lineNumber, std::shared_ptr<Route>& currentRoute) const {
+void FileDatabase::processStopLine(const QString& line, int lineNumber, const std::shared_ptr<Route>& currentRoute) const {
     if (!currentRoute) {
         throw ValidationException(QString("Stop without route at line %1").arg(lineNumber));
     }
@@ -335,7 +335,7 @@ void FileDatabase::processStopLine(const QString& line, int lineNumber, std::sha
     currentRoute->addStop(city, duration, price);
 }
 
-void FileDatabase::processTripLine(const QString& line, int lineNumber, std::shared_ptr<Route>& currentRoute) const {
+void FileDatabase::processTripLine(const QString& line, int lineNumber, const std::shared_ptr<Route>& currentRoute) const {
     if (!currentRoute) {
         throw ValidationException(QString("Trip without route at line %1").arg(lineNumber));
     }

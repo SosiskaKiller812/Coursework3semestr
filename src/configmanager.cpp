@@ -3,7 +3,12 @@
 #include <QTextStream>
 #include <QIODevice>
 #include <fstream>
+#include <QStringConverter>
 
+ConfigManager& ConfigManager::getInstance() {
+    static ConfigManager instance;
+    return instance;
+}
 
 ConfigManager::ConfigManager() = default;
 
@@ -14,18 +19,18 @@ bool ConfigManager::loadFromFile(const QString& filename) {
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         return false;
     }
-    
+
     QTextStream in(&file);
     in.setEncoding(QStringConverter::Utf8);
-    
+
     m_config.clear();
-    
+
     while (!in.atEnd()) {
         QString line = in.readLine().trimmed();
         if (line.isEmpty() || line.startsWith("#")) {
             continue;
         }
-        
+
         int eqPos = line.indexOf("=");
         if (eqPos > 0) {
             QString key = line.left(eqPos).trimmed();
@@ -33,7 +38,7 @@ bool ConfigManager::loadFromFile(const QString& filename) {
             m_config[key] = unescapeValue(value);
         }
     }
-    
+
     return true;
 }
 
@@ -42,14 +47,14 @@ bool ConfigManager::saveToFile(const QString& filename) const {
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         return false;
     }
-    
+
     QTextStream out(&file);
     out.setEncoding(QStringConverter::Utf8);
-    
+
     for (auto it = m_config.begin(); it != m_config.end(); ++it) {
         out << it.key() << "=" << escapeValue(it.value().toString()) << "\n";
     }
-    
+
     return true;
 }
 
@@ -57,16 +62,16 @@ bool ConfigManager::loadFromStream(std::ifstream& stream) {
     if (!stream.is_open()) {
         return false;
     }
-    
+
     m_config.clear();
-    
+
     std::string line;
     while (std::getline(stream, line)) {
         QString qline = QString::fromStdString(line).trimmed();
         if (qline.isEmpty() || qline.startsWith("#")) {
             continue;
         }
-        
+
         int eqPos = qline.indexOf("=");
         if (eqPos > 0) {
             QString key = qline.left(eqPos).trimmed();
@@ -74,7 +79,7 @@ bool ConfigManager::loadFromStream(std::ifstream& stream) {
             m_config[key] = unescapeValue(value);
         }
     }
-    
+
     return true;
 }
 
@@ -82,12 +87,12 @@ bool ConfigManager::saveToStream(std::ofstream& stream) const {
     if (!stream.is_open()) {
         return false;
     }
-    
+
     for (auto it = m_config.begin(); it != m_config.end(); ++it) {
-        stream << it.key().toStdString() << "=" 
+        stream << it.key().toStdString() << "="
                << escapeValue(it.value().toString()).toStdString() << "\n";
     }
-    
+
     return true;
 }
 
@@ -155,4 +160,3 @@ QString ConfigManager::unescapeValue(const QString& value) const {
     unescaped.replace(R"(\\)", R"(\)");
     return unescaped;
 }
-
