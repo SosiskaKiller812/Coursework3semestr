@@ -60,12 +60,10 @@ bool TicketOffice::cancelTicket(int ticketId) const {
 }
 
 bool TicketOffice::refundTicket(int ticketId) const {
-    if (auto ticket = getTicket(ticketId); ticket) {
-        if (ticket->status() == "paid") {
-            ticket->setStatus("refunded");
-            // Логика возврата средств
-            return true;
-        }
+    if (auto ticket = getTicket(ticketId); ticket && ticket->status() == "paid") {
+        ticket->setStatus("refunded");
+        // Логика возврата средств
+        return true;
     }
     return false;
 }

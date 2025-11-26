@@ -2,10 +2,6 @@
 #include <QDateTime>
 #include <iostream>
 
-Logger& Logger::getInstance() {
-    static Logger instance;
-    return instance;
-}
 
 Logger::Logger() = default;
 

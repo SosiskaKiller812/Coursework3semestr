@@ -87,8 +87,8 @@ void EditRouteDialog::updateStopsTable(){
     auto stops = m_route.getAllStops();
     tableStops->setRowCount(stops.size());
 
-    for(int i = 0; i < stops.size(); ++i){
-        const auto &stop = stops[i];
+    int i = 0;
+    for(const auto &stop : stops){
 
         tableStops->setItem(i, 0, new QTableWidgetItem(stop->city));
         tableStops->setItem(i, 1, new QTableWidgetItem(QString::number(stop->durationMinutes) + " мин"));
@@ -208,16 +208,15 @@ void EditRouteDialog::onAddStop(){
 void EditRouteDialog::onEditStop(int row){
     if(row < 0) return;
 
-    auto stop = m_route.getStop(row);
-    if(!stop) return;
+    if(auto stop = m_route.getStop(row); stop) {
+        AddStopDialog dlg(this);
+        dlg.setWindowTitle("Редактировать остановку");
 
-    AddStopDialog dlg(this);
-    dlg.setWindowTitle("Редактировать остановку");
-
-    if(dlg.exec() == QDialog::Accepted){
-        m_route.removeStop(row);
-        m_route.insertStop(row, dlg.cityName(), dlg.duration(), dlg.price());
-        updateStopsTable();
+        if(dlg.exec() == QDialog::Accepted){
+            m_route.removeStop(row);
+            m_route.insertStop(row, dlg.cityName(), dlg.duration(), dlg.price());
+            updateStopsTable();
+        }
     }
 }
 

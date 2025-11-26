@@ -41,8 +41,8 @@ public:
     // Hidden friend operator
     friend Schedule operator+(const Schedule& lhs, const Schedule& rhs) {
         Schedule result = lhs;
-        for (const auto& item : rhs.m_schedule) {
-            result.addTrip(item.first, item.second);
+        for (const auto& [route, trip] : rhs.m_schedule) {
+            result.addTrip(route, trip);
         }
         return result;
     }

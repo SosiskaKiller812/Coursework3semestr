@@ -4,10 +4,6 @@
 #include <QIODevice>
 #include <fstream>
 
-ConfigManager& ConfigManager::getInstance() {
-    static ConfigManager instance;
-    return instance;
-}
 
 ConfigManager::ConfigManager() = default;
 

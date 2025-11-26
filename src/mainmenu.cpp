@@ -190,10 +190,10 @@ void MainMenu::refreshTrips()
 bool MainMenu::tripMatchesFilter(const std::shared_ptr<Trip>&, const std::shared_ptr<Route>& route, const QString& companyName) const
 {
     QString searchText = searchEdit->text().toLower();
-    QString selectedCompany = companyFilter->currentData().toString();
 
     // Фильтр по компании
-    if (!selectedCompany.isEmpty() && companyName != selectedCompany) {
+    if (QString selectedCompany = companyFilter->currentData().toString(); 
+        !selectedCompany.isEmpty() && companyName != selectedCompany) {
         return false;
     }
 

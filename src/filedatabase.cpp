@@ -114,7 +114,8 @@ QVector<Company> FileDatabase::loadCompanies() const {
                     throw ValidationException(QString("Empty city name at line %1").arg(lineNumber));
                 }
 
-                bool durationOk, priceOk;
+                bool durationOk;
+                bool priceOk;
                 int duration = parts[1].toInt(&durationOk);
                 double price = parts[2].toDouble(&priceOk);
 
@@ -169,8 +170,7 @@ void FileDatabase::saveCompanies() {
     QFile file(companiesFilePath());
 
     // Создаем директорию если не существует
-    QDir dir(m_folderPath);
-    if (!dir.exists() && !dir.mkpath(".")) {
+    if (QDir dir(m_folderPath); !dir.exists() && !dir.mkpath(".")) {
         throw DatabaseException(QString("Could not create data directory: %1").arg(m_folderPath));
     }
 
@@ -330,7 +330,7 @@ void FileDatabase::performAutoSave() {
         // Можно показать сообщение пользователю или записать в лог
     } catch (const ValidationException& e) {
         qCritical() << "Auto-save validation failed:" << e.what();
-    } catch (const std::exception& e) {
-        qCritical() << "Unexpected error during auto-save:" << e.what();
+    } catch (const std::runtime_error& e) {
+        qCritical() << "Unexpected runtime error during auto-save:" << e.what();
     }
 }

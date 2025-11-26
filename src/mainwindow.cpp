@@ -96,8 +96,10 @@ void MainWindow::onEditRoute(int row) {
         }
     } catch (const RouteException& e) {
         QMessageBox::critical(this, "Ошибка маршрута", e.what());
-    } catch (const std::exception& e) {
-        QMessageBox::critical(this, "Ошибка", e.what());
+    } catch (const DatabaseException& e) {
+        QMessageBox::critical(this, "Ошибка базы данных", e.what());
+    } catch (const ValidationException& e) {
+        QMessageBox::critical(this, "Ошибка валидации", e.what());
     }
 }
 
