@@ -17,7 +17,10 @@ public:
         Critical
     };
     
-    static Logger& getInstance();
+    inline static Logger& getInstance() {
+        static Logger instance;
+        return instance;
+    }
     
     void setLogFile(const QString& filename);
     void setLogLevel(LogLevel level);
@@ -31,7 +34,7 @@ public:
     void critical(const QString& message);
     
     // Работа с файлами через потоки
-    void logToStream(std::ofstream& stream, LogLevel level, const QString& message);
+    void logToStream(std::ofstream& stream, LogLevel level, const QString& message) const;
     
     // Перегрузка операций
     Logger& operator<<(const QString& message);

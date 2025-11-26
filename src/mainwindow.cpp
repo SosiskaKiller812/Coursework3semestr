@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     db = new FileDatabase("data", this);
 
-    QWidget *central = new QWidget(this);
+    auto *central = new QWidget(this);
     setCentralWidget(central);
 
     cbCompany = new QComboBox(this);
@@ -63,8 +63,8 @@ MainWindow::MainWindow(QWidget *parent)
     auto *mainContentLayout = new QVBoxLayout;
 
     // Группа маршрутов
-    QGroupBox *routesGroup = new QGroupBox("Маршруты компании", this);
-    QVBoxLayout *routesLayout = new QVBoxLayout(routesGroup);
+    auto *routesGroup = new QGroupBox("Маршруты компании", this);
+    auto *routesLayout = new QVBoxLayout(routesGroup);
     routesLayout->addWidget(btnAddRoute);
     routesLayout->addWidget(tableRoutes);
 
@@ -182,13 +182,13 @@ void MainWindow::refreshRoutesTable() {
         tableRoutes->setItem(i, 3, new QTableWidgetItem(QString::number(r->totalDuration())));
 
         // Создаем контейнер для кнопок
-        QWidget *buttonsWidget = new QWidget(this);
-        QHBoxLayout *buttonsLayout = new QHBoxLayout(buttonsWidget);
+        auto *buttonsWidget = new QWidget(this);
+        auto *buttonsLayout = new QHBoxLayout(buttonsWidget);
         buttonsLayout->setContentsMargins(0, 0, 0, 0);
         buttonsLayout->setSpacing(0);
 
         // Кнопка редактировать
-        QPushButton *btnEdit = new QPushButton("✏️", this);
+        auto *btnEdit = new QPushButton("✏️", this);
         btnEdit->setFixedSize(25, 25);
         btnEdit->setToolTip("Редактировать маршрут");
         connect(btnEdit, &QPushButton::clicked, this, [this, i]() {
@@ -196,7 +196,7 @@ void MainWindow::refreshRoutesTable() {
         });
 
         // Кнопка копировать
-        QPushButton *btnCopy = new QPushButton("📋", this);
+        auto *btnCopy = new QPushButton("📋", this);
         btnCopy->setFixedSize(25, 25);
         btnCopy->setToolTip("Копировать маршрут");
         connect(btnCopy, &QPushButton::clicked, this, [this, i]() {
@@ -204,7 +204,7 @@ void MainWindow::refreshRoutesTable() {
         });
 
         // Кнопка удалить
-        QPushButton *btnRemove = new QPushButton("❌", this);
+        auto *btnRemove = new QPushButton("❌", this);
         btnRemove->setFixedSize(25, 25);
         btnRemove->setToolTip("Удалить маршрут");
         connect(btnRemove, &QPushButton::clicked, this, [this, i]() {
@@ -212,7 +212,7 @@ void MainWindow::refreshRoutesTable() {
         });
 
         // Кнопка детали
-        QPushButton *btnDetails = new QPushButton("👁️", this);
+        auto *btnDetails = new QPushButton("👁️", this);
         btnDetails->setFixedSize(25, 25);
         btnDetails->setToolTip("Показать детали маршрута");
         connect(btnDetails, &QPushButton::clicked, this, [this, i]() {

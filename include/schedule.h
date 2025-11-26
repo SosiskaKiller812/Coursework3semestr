@@ -38,8 +38,14 @@ public:
     // Перегрузка операций
     Schedule& operator+=(const std::pair<std::shared_ptr<Route>, std::shared_ptr<Trip>>& item);
     
-    // Дружественная функция для сложения
-    friend Schedule operator+(const Schedule& lhs, const Schedule& rhs);
+    // Hidden friend operator
+    friend Schedule operator+(const Schedule& lhs, const Schedule& rhs) {
+        Schedule result = lhs;
+        for (const auto& item : rhs.m_schedule) {
+            result.addTrip(item.first, item.second);
+        }
+        return result;
+    }
     
     // Дружественная функция для вывода
     friend QString getScheduleInfo(const Schedule& schedule);

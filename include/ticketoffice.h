@@ -41,7 +41,7 @@ public:
     
     std::shared_ptr<Booking> getBooking(int id) const;
     QVector<std::shared_ptr<Booking>> getAllBookings() const;
-    void processExpiredBookings();
+    void processExpiredBookings() const;
     
     // Работа с платежами
     int createPayment(std::shared_ptr<Ticket> ticket,

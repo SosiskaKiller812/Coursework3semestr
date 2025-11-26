@@ -5,17 +5,16 @@
 #include "seat.h"
 #include "discount.h"
 
-TicketOffice::TicketOffice() {
-}
+TicketOffice::TicketOffice() = default;
 
 int TicketOffice::createTicket(std::shared_ptr<Passenger> passenger,
                                 std::shared_ptr<Route> route,
                                 std::shared_ptr<Trip> trip,
                                 int seatNumber,
                                 double price) {
-    auto ticket = std::make_shared<Ticket>(m_nextTicketId++, passenger, route, trip, seatNumber, price);
+    const int ticketId = m_nextTicketId++;
+    auto ticket = std::make_shared<Ticket>(ticketId, passenger, route, trip, seatNumber, price);
     m_tickets.append(ticket);
-    const int ticketId = ticket->id();
     return ticketId;
 }
 
@@ -62,9 +61,11 @@ bool TicketOffice::cancelTicket(int ticketId) const {
 
 bool TicketOffice::refundTicket(int ticketId) const {
     if (auto ticket = getTicket(ticketId); ticket) {
-        ticket->setStatus("cancelled");
-        // Логика возврата средств
-        return true;
+        if (ticket->status() == "paid") {
+            ticket->setStatus("refunded");
+            // Логика возврата средств
+            return true;
+        }
     }
     return false;
 }
@@ -73,12 +74,12 @@ int TicketOffice::createBooking(std::shared_ptr<Passenger> passenger,
                                  std::shared_ptr<Route> route,
                                  std::shared_ptr<Trip> trip,
                                  std::shared_ptr<Seat> seat) {
-    auto booking = std::make_shared<Booking>(m_nextBookingId++, passenger, route, trip, seat);
+    const int bookingId = m_nextBookingId++;
+    auto booking = std::make_shared<Booking>(bookingId, passenger, route, trip, seat);
     if (seat) {
         seat->reserve(passenger);
     }
     m_bookings.append(booking);
-    const int bookingId = booking->id();
     return bookingId;
 }
 
@@ -95,8 +96,8 @@ QVector<std::shared_ptr<Booking>> TicketOffice::getAllBookings() const {
     return m_bookings;
 }
 
-void TicketOffice::processExpiredBookings() {
-    for (auto& booking : m_bookings) {
+void TicketOffice::processExpiredBookings() const {
+    for (const auto& booking : m_bookings) {
         if (booking && booking->isExpired()) {
             booking->setStatus(Booking::BookingStatus::Expired);
             if (auto seat = booking->seat(); seat) {
@@ -109,10 +110,10 @@ void TicketOffice::processExpiredBookings() {
 int TicketOffice::createPayment(std::shared_ptr<Ticket> ticket,
                                  double amount,
                                  Payment::PaymentMethod method) {
-    auto payment = std::make_shared<Payment>(m_nextPaymentId++, ticket, amount, method);
+    const int paymentId = m_nextPaymentId++;
+    auto payment = std::make_shared<Payment>(paymentId, ticket, amount, method);
     payment->process();
     m_payments.append(payment);
-    const int paymentId = payment->id();
     return paymentId;
 }
 

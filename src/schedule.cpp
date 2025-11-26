@@ -94,13 +94,6 @@ Schedule& Schedule::operator+=(const std::pair<std::shared_ptr<Route>, std::shar
     return *this;
 }
 
-Schedule operator+(const Schedule& lhs, const Schedule& rhs) {
-    Schedule result = lhs;
-    for (const auto& item : rhs.m_schedule) {
-        result.addTrip(item.first, item.second);
-    }
-    return result;
-}
 
 QString getScheduleInfo(const Schedule& schedule) {
     QString info = QString("Schedule contains %1 trips\n").arg(schedule.m_schedule.size());

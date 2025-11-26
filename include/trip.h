@@ -13,7 +13,7 @@ public:
     QDateTime arrival(const Route &route) const;
 
     // Перегрузка операций
-    bool operator==(const Trip& other) const;
+    bool operator==(const Trip& other) const = default;
     auto operator<=>(const Trip& other) const;
 
     // Дружественная функция для вывода в отладку

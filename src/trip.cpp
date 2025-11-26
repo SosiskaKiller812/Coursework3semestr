@@ -9,9 +9,6 @@ QDateTime Trip::arrival(const Route &route) const {
     return m_departure.addSecs(route.totalDuration() * 60);
 }
 
-bool Trip::operator==(const Trip& other) const {
-    return m_departure == other.m_departure;
-}
 
 auto Trip::operator<=>(const Trip& other) const {
     return m_departure <=> other.m_departure;

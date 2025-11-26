@@ -32,7 +32,7 @@ QString FileDatabase::companiesFilePath() const {
     return m_folderPath + "/companies.txt";
 }
 
-QVector<Company> FileDatabase::loadCompanies() {
+QVector<Company> FileDatabase::loadCompanies() const {
     QVector<Company> list;
     QFile file(companiesFilePath());
 
@@ -253,7 +253,7 @@ void FileDatabase::saveCompanies() {
     qDebug() << "Data saved successfully to" << file.fileName();
 }
 
-void FileDatabase::validateCompanies(const QVector<Company> &companies) {
+void FileDatabase::validateCompanies(const QVector<Company> &companies) const {
     if (companies.isEmpty()) {
         throw ValidationException("No companies to save");
     }

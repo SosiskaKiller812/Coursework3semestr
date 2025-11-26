@@ -13,7 +13,7 @@ class FileDatabase : public QObject {
 public:
     explicit FileDatabase(const QString &folderPath, QObject *parent = nullptr);
 
-    QVector<Company> loadCompanies();
+    QVector<Company> loadCompanies() const;
     void saveCompanies();
     void setCompanies(const QVector<Company> &companies);
 
@@ -25,7 +25,7 @@ private slots:
 
 private:
     QString companiesFilePath() const;
-    void validateCompanies(const QVector<Company> &companies); // Добавляем объявление
+    void validateCompanies(const QVector<Company> &companies) const; // Добавляем объявление
 
     QString m_folderPath;
     QVector<Company> m_companies;

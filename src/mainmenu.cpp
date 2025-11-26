@@ -29,7 +29,7 @@ MainMenu::MainMenu(QWidget *parent)
 
 void MainMenu::setupUI()
 {
-    QWidget *central = new QWidget(this);
+    auto *central = new QWidget(this);
     setCentralWidget(central);
 
     // Создаем кнопку управления
@@ -232,7 +232,7 @@ QDateTime MainMenu::getTripDeparture(const std::shared_ptr<Trip>& trip, const st
     return trip->departure();
 }
 
-void MainMenu::onTripDoubleClicked(int row, int column)
+void MainMenu::onTripDoubleClicked(int row, int /*column*/)
 {
 
     // Находим маршрут для выбранного рейса
@@ -255,7 +255,7 @@ void MainMenu::onTripDoubleClicked(int row, int column)
 
 void MainMenu::onManageRoutes()
 {
-    MainWindow *manageWindow = new MainWindow();
+    auto *manageWindow = new MainWindow();
     manageWindow->setAttribute(Qt::WA_DeleteOnClose);
     connect(manageWindow, &MainWindow::destroyed, this, &MainMenu::refreshTrips);
     manageWindow->show();

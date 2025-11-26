@@ -60,7 +60,7 @@ void Logger::critical(const QString& message) {
     log(LogLevel::Critical, message);
 }
 
-void Logger::logToStream(std::ofstream& stream, LogLevel level, const QString& message) {
+void Logger::logToStream(std::ofstream& stream, LogLevel level, const QString& message) const {
     if (!stream.is_open()) {
         return;
     }

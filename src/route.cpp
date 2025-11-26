@@ -4,7 +4,6 @@
 
 Route::Route(const QString &name) : m_name(name) {}
 
-Route::~Route() = default;
 
 Route::Route(const Route& other)
     : m_name(other.m_name) {
@@ -58,10 +57,11 @@ QString Route::info() const {
     int stopNumber = 1;
     for (auto s = m_head; s != nullptr;) {
         text += QString("%1. %2 - %3 мин, %4 руб\n")
-                    .arg(stopNumber++)
+                    .arg(stopNumber)
                     .arg(s->city)
                     .arg(s->durationMinutes)
                     .arg(s->price);
+        ++stopNumber;
         s = s->next;
     }
 
@@ -110,7 +110,7 @@ QString Route::detailedInfo() const {
 
     for (auto s = m_head; s != nullptr; s = s->next) {
         text += QString("   %1. %2\n")
-                    .arg(stopNumber++, 2)
+                    .arg(stopNumber, 2)
                     .arg(s->city);
         text += QString("      +%1 мин (%2 мин)\n")
                     .arg(s->durationMinutes)
@@ -118,6 +118,7 @@ QString Route::detailedInfo() const {
         text += QString("      +%1 руб (%2 руб)\n")
                     .arg(s->price)
                     .arg(accumulatedPrice + s->price);
+        ++stopNumber;
 
         if (s->next) {
             text += "      ↓\n";

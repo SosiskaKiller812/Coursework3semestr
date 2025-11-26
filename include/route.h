@@ -10,7 +10,7 @@ class Trip;
 class Route {
 public:
     explicit Route(const QString &name = "");
-    ~Route();
+    ~Route() = default;
     Route(const Route& other);
     Route& operator=(const Route& other);
 
