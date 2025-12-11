@@ -179,8 +179,8 @@ void MainMenu::refreshTrips()
         tableTrips->setItem(i, 2, new QTableWidgetItem(route->name()));
         tableTrips->setItem(i, 3, new QTableWidgetItem(companyName));
         tableTrips->setItem(i, 4, new QTableWidgetItem(QString::number(route->totalDuration()) + " мин"));
-        ++i;
         tableTrips->setItem(i, 5, new QTableWidgetItem(QString::number(route->totalPrice(), 'f', 2) + " руб"));
+        ++i;
     }
 
     tableTrips->setSortingEnabled(true);

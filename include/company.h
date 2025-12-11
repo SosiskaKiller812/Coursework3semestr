@@ -3,18 +3,24 @@
 #include <QString>
 #include <memory>
 
+#include <QString>
+#include <memory>
+#include <utility>
+
 class Route;
 
 class Company {
 public:
     explicit Company(const QString &name = "");
     ~Company();
+
     Company(const Company& other);
+    Company(Company&& other) noexcept;
     Company& operator=(const Company& other);
+    Company& operator=(Company&& other) noexcept;
 
     QString name() const;
     void setName(const QString &name);
-
     void addRoute(std::shared_ptr<Route> route);
     QVector<std::shared_ptr<Route>>& routes();
     const QVector<std::shared_ptr<Route>>& routes() const;

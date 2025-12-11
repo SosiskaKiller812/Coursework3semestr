@@ -243,7 +243,9 @@ void MainWindow::onAddCompany() {
     if (!ok || name.trimmed().isEmpty()) return;
     companies.append(Company(name.trimmed()));
     onDataChanged();
+    refreshCompanySelector();
     cbCompany->setCurrentIndex(companies.size() - 1);
+    refreshRoutesTable();
 }
 
 void MainWindow::onRemoveCompany() {
@@ -273,4 +275,5 @@ void MainWindow::onAddRoute() {
 
     companies[idxC].addRoute(route);
     onDataChanged();
+    refreshRoutesTable();
 }

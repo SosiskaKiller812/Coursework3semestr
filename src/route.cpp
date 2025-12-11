@@ -4,7 +4,16 @@
 
 Route::Route(const QString &name) : m_name(name) {}
 
-Route::~Route() = default;
+Route::~Route() {
+    while (m_head) {
+        auto next = m_head->next;
+        m_head->next.reset();
+        m_head = next;
+    }
+    m_tail.reset();
+
+    m_trips.clear();
+}
 
 
 Route::Route(const Route& other)

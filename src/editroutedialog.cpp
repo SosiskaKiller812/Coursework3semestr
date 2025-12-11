@@ -138,6 +138,7 @@ void EditRouteDialog::updateStopsTable(){
         buttonsLayout->addWidget(btnDown);
 
         tableStops->setCellWidget(i, 3, buttonsWidget);
+        ++i;
     }
 
     tableStops->resizeColumnsToContents();

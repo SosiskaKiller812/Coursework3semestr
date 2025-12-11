@@ -5,6 +5,7 @@
 #include "stop.h"
 #include <QVector>
 #include <QString>
+#include <QSet>
 #include <QTimer>
 #include <QObject>
 #include <memory>
