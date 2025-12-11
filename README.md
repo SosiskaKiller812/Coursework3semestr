@@ -1,6 +1,6 @@
 # Программирование на Языках Высокого Уровня (ПнаЯВУ)
 ## Этот репозиторий представляет курсовую работу по дисциплине "ПнаЯВУ" за 3 семестр. 
 ___
-Суть задания в реализации проекта "Информационная система автовокзала" с использованием QT и соответсвующих требований - [тут](https://github.com/irina-skiba/course_project)
-[SonarCloud](https://sonarcloud.io/project/overview?id=SosiskaKiller812_Coursework3semestr)
+>Суть задания в реализации проекта "Информационная система автовокзала" с использованием QT и соответсвующих требований - [тут](https://github.com/irina-skiba/course_project)
+>[SonarCloud](https://sonarcloud.io/project/overview?id=SosiskaKiller812_Coursework3semestr)
 ___
