@@ -3,25 +3,26 @@
 
 Company::Company(const QString &name) : m_name(name) {}
 
-// Деструктор по умолчанию
-Company::~Company() = default;
+Company::~Company() {
+    m_routes.clear();
 
-// Конструктор копирования
+    m_name.clear();
+}
+
+
 Company::Company(const Company& other) : m_name(other.m_name) {
     for (const auto& route : other.m_routes) {
         m_routes.append(std::make_shared<Route>(*route));
     }
 }
 
-// Конструктор перемещения
 Company::Company(Company&& other) noexcept
     : m_name(std::move(other.m_name)),
     m_routes(std::move(other.m_routes)) {
-    // При перемещении исходный объект оставляем в валидном состоянии
+
     other.m_name.clear();
 }
 
-// Оператор копирующего присваивания
 Company& Company::operator=(const Company& other) {
     if (this != &other) {
         m_name = other.m_name;
@@ -33,12 +34,11 @@ Company& Company::operator=(const Company& other) {
     return *this;
 }
 
-// Оператор перемещающего присваивания
 Company& Company::operator=(Company&& other) noexcept {
     if (this != &other) {
         m_name = std::move(other.m_name);
         m_routes = std::move(other.m_routes);
-        // Очищаем исходный объект
+
         other.m_name.clear();
     }
     return *this;
