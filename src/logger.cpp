@@ -46,12 +46,15 @@ Logger& Logger::operator<<(const QString& message) {
 }
 
 QString Logger::levelToString(LogLevel level) const {
+
+    using enum Logger::LogLevel;
+
     switch (level) {
-    case LogLevel::Debug:    return "DEBUG";
-    case LogLevel::Info:     return "INFO";
-    case LogLevel::Warning:  return "WARNING";
-    case LogLevel::Error:    return "ERROR";
-    case LogLevel::Critical: return "CRITICAL";
+    case Debug:    return "DEBUG";
+    case Info:     return "INFO";
+    case Warning:  return "WARNING";
+    case Error:    return "ERROR";
+    case Critical: return "CRITICAL";
     }
     return "UNKNOWN";
 }
