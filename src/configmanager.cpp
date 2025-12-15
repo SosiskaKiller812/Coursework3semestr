@@ -5,14 +5,11 @@
 #include <fstream>
 #include <QStringConverter>
 
+ConfigManager& ConfigManager::instance = *new ConfigManager();
+
 ConfigManager::ConfigManager() = default;
 
 ConfigManager::~ConfigManager() = default;
-
-ConfigManager& ConfigManager::instance = []() -> ConfigManager& {
-    static ConfigManager instance;
-    return instance;
-}();
 
 bool ConfigManager::loadFromFile(const QString& filename) {
     QFile file(filename);

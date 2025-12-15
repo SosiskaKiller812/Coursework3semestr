@@ -185,17 +185,12 @@ void FileDatabase::validateRoute(const std::shared_ptr<Route>& route, const QStr
         throw ValidationException(QString("Empty route name in company: %1").arg(companyName));
     }
 
-    // if (routeNames.contains(route->name())) {
-    //     throw ValidationException(QString("Duplicate route name '%1' in company: %2").arg(route->name()).arg(companyName));
-    // }
     routeNames.append(route->name());
 
-    // Проверяем остановки маршрута
     if (route->totalStops() == 0) {
         throw ValidationException(QString("Route '%1' has no stops").arg(route->name()));
     }
 
-    // Проверяем рейсы
     for (const auto &trip : route->trips()) {
         validateTrip(trip, route->name());
     }
@@ -212,7 +207,7 @@ void FileDatabase::setCompanies(const QVector<Company> &companies) {
 }
 
 void FileDatabase::scheduleAutoSave() {
-    m_autoSaveTimer->start(2000); // Сохраняем через 2 секунды после изменения
+    m_autoSaveTimer->start(2000);
 }
 
 void FileDatabase::setAutoSaveEnabled(bool enabled) {
@@ -227,7 +222,7 @@ void FileDatabase::performAutoSave() {
         saveCompanies();
     } catch (const DatabaseException& e) {
         qCritical() << "Auto-save failed:" << e.what();
-        // Можно показать сообщение пользователю или записать в лог
+
     } catch (const ValidationException& e) {
         qCritical() << "Auto-save validation failed:" << e.what();
     }
@@ -240,7 +235,7 @@ void FileDatabase::validateStop(const std::shared_ptr<Stop>& stop) const {
     if (stop->city.isEmpty()) {
         throw ValidationException("Stop city cannot be empty");
     }
-    // Разрешаем 0 минут для остановок
+
     if (stop->durationMinutes < 0) {
         throw ValidationException(QString("Invalid duration for stop '%1': %2").arg(stop->city).arg(stop->durationMinutes));
     }
@@ -323,7 +318,7 @@ void FileDatabase::processStopLine(const QString& line, int lineNumber, const st
     int duration = parts[1].toInt(&durationOk);
     double price = parts[2].toDouble(&priceOk);
 
-    // Разрешаем 0 минут для остановок (например, конечные остановки)
+
     if (!durationOk || duration < 0) {
         throw ValidationException(QString("Invalid duration at line %1: %2").arg(lineNumber).arg(parts[1]));
     }
@@ -375,7 +370,7 @@ void FileDatabase::saveRoute(const std::shared_ptr<Route>& route, QTextStream& o
 
     out << "Route: " << route->name() << "\r\n";
 
-    // Сохраняем остановки
+
     for (auto stop = route->firstStop(); stop; stop = stop->next) {
         validateStop(stop);
         out << "Stop: " << stop->city << ";" << stop->durationMinutes << ";" << stop->price << "\r\n";

@@ -9,6 +9,7 @@
 
 class ConfigManager {
 public:
+    // Синглтон через inline ссылку
     static ConfigManager& instance;
 
     // Загрузка и сохранение конфигурации
