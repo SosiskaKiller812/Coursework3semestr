@@ -32,6 +32,7 @@ public:
     void addTrip(const QDateTime &departure);
     QVector<std::shared_ptr<Trip>>& trips();
     const QVector<std::shared_ptr<Trip>>& trips() const;
+    void setName(const QString &name) { m_name = name; }
 
 private:
     QString m_name;

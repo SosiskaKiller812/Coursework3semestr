@@ -254,11 +254,18 @@ void MainMenu::onTripDoubleClicked(int row, int /*column*/)
     }
 }
 
-void MainMenu::onManageRoutes() const
+void MainMenu::onManageRoutes()
 {
     auto *manageWindow = new MainWindow();
     manageWindow->setAttribute(Qt::WA_DeleteOnClose);
-    connect(manageWindow, &MainWindow::destroyed, this, &MainMenu::refreshTrips);
+
+
+    connect(manageWindow, &MainWindow::destroyed, this, [this]() {
+
+        loadData();
+        refreshTrips();
+    });
+
     manageWindow->show();
 }
 

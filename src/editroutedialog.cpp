@@ -75,6 +75,10 @@ EditRouteDialog::EditRouteDialog(Route &route, QWidget *parent)
     connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
     mainLayout->addWidget(buttonBox);
 
+    connect(buttonBox, &QDialogButtonBox::accepted, this, [this]() {
+        m_route.setName(leRouteName->text());
+    });
+
     updateStopsTable();
     updateTripsTable();
 

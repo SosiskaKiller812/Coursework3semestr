@@ -32,7 +32,7 @@ private:
     void validateCompanies(const QVector<Company> &companies) const;
     void validateStop(const std::shared_ptr<Stop>& stop) const;
     void validateTrip(const std::shared_ptr<Trip>& trip, const QString& routeName) const;
-    void validateRoute(const std::shared_ptr<Route>& route, const QString& companyName, QSet<QString>& routeNames) const;
+    void validateRoute(const std::shared_ptr<Route>& route, const QString& companyName, QList<QString>& routeNames) const;
 
     // Вспомогательные функции для loadCompanies
     void processCompanySeparator(Company& currentCompany, std::shared_ptr<Route>& currentRoute, QVector<Company>& list) const;

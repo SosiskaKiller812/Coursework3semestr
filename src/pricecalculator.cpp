@@ -1,7 +1,5 @@
 #include "pricecalculator.h"
 #include "route.h"
-#include "discount.h"
-#include "passenger.h"
 #include <algorithm>
 
 PriceCalculator::PriceCalculator() = default;
@@ -11,19 +9,6 @@ double PriceCalculator::calculateBasePrice(std::shared_ptr<Route> route) {
         return 0.0;
     }
     return route->totalPrice();
-}
-
-double PriceCalculator::calculatePrice(std::shared_ptr<Route> route, 
-                                        std::shared_ptr<Discount> discount,
-                                        std::shared_ptr<Passenger> passenger) const {
-    double basePrice = calculateBasePrice(route);
-    
-    if (discount && passenger) {
-        double discountAmount = discount->calculateDiscount(basePrice, passenger);
-        return basePrice - discountAmount;
-    }
-    
-    return basePrice;
 }
 
 double PriceCalculator::calculateSegmentPrice(std::shared_ptr<Route> route, 
@@ -49,30 +34,9 @@ double PriceCalculator::calculateSegmentPrice(std::shared_ptr<Route> route,
     return price;
 }
 
-double PriceCalculator::calculatePriceWithMultipleDiscounts(std::shared_ptr<Route> route,
-                                                             QVector<std::shared_ptr<Discount>> discounts,
-                                                             std::shared_ptr<Passenger> passenger) const {
-    double basePrice = calculateBasePrice(route);
-    double maxDiscount = 0.0;
-    
-    for (const auto& discount : discounts) {
-        if (discount && discount->isApplicable(passenger)) {
-            double discountAmount = discount->calculateDiscount(basePrice, passenger);
-            if (discountAmount > maxDiscount) {
-                maxDiscount = discountAmount;
-            }
-        }
-    }
-    
-    return basePrice - maxDiscount;
-}
 
 double PriceCalculator::operator()(std::shared_ptr<Route> route) const {
     return calculateBasePrice(route);
-}
-
-double PriceCalculator::operator()(std::shared_ptr<Route> route, std::shared_ptr<Discount> discount) const {
-    return calculatePrice(route, discount, nullptr);
 }
 
 

@@ -162,7 +162,7 @@ void FileDatabase::validateCompany(const Company& company, QSet<QString>& compan
         qWarning() << "Company" << company.name() << "has no routes";
     }
 
-    QSet<QString> routeNames;
+    QList<QString> routeNames;
     for (const auto &route : routes) {
         validateRoute(route, company.name(), routeNames);
     }
@@ -180,15 +180,15 @@ void FileDatabase::validateCompanies(const QVector<Company> &companies) const {
 }
 
 
-void FileDatabase::validateRoute(const std::shared_ptr<Route>& route, const QString& companyName, QSet<QString>& routeNames) const {
+void FileDatabase::validateRoute(const std::shared_ptr<Route>& route, const QString& companyName, QList<QString>& routeNames) const {
     if (route->name().isEmpty()) {
         throw ValidationException(QString("Empty route name in company: %1").arg(companyName));
     }
 
-    if (routeNames.contains(route->name())) {
-        throw ValidationException(QString("Duplicate route name '%1' in company: %2").arg(route->name()).arg(companyName));
-    }
-    routeNames.insert(route->name());
+    // if (routeNames.contains(route->name())) {
+    //     throw ValidationException(QString("Duplicate route name '%1' in company: %2").arg(route->name()).arg(companyName));
+    // }
+    routeNames.append(route->name());
 
     // Проверяем остановки маршрута
     if (route->totalStops() == 0) {
