@@ -3,11 +3,11 @@
 
 Logger& Logger::instance = *new Logger();
 
-Logger::Logger() {}
-Logger::~Logger() {}
+Logger::Logger() = default;
+Logger::~Logger() = default;
 
 void Logger::setLogFile(const QString& filename) {
-    std::lock_guard<std::mutex> lock(m_mutex);
+    std::scoped_lock lock(m_mutex);
     m_logFile = filename;
     m_file = std::make_unique<QFile>(m_logFile);
     if (m_file->open(QIODevice::Append | QIODevice::Text)) {
@@ -16,12 +16,12 @@ void Logger::setLogFile(const QString& filename) {
 }
 
 void Logger::setLogLevel(LogLevel level) {
-    std::lock_guard<std::mutex> lock(m_mutex);
+    std::scoped_lock lock(m_mutex);
     m_logLevel = level;
 }
 
 void Logger::setConsoleOutput(bool enabled) {
-    std::lock_guard<std::mutex> lock(m_mutex);
+    std::scoped_lock lock(m_mutex);
     m_consoleOutput = enabled;
 }
 
@@ -57,7 +57,7 @@ QString Logger::levelToString(LogLevel level) const {
 }
 
 void Logger::writeLog(LogLevel level, const QString& message) {
-    std::lock_guard<std::mutex> lock(m_mutex);
+    std::scoped_lock lock(m_mutex);
     QString formatted = formatLogMessage(level, message);
 
     if (m_consoleOutput) {
@@ -72,12 +72,17 @@ void Logger::writeLog(LogLevel level, const QString& message) {
 QString formatLogMessage(Logger::LogLevel level, const QString& message) {
     QString timestamp = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
     QString levelStr;
+
+
+    using enum Logger::LogLevel;
+
     switch (level) {
-    case Logger::LogLevel::Debug:    levelStr = "DEBUG"; break;
-    case Logger::LogLevel::Info:     levelStr = "INFO"; break;
-    case Logger::LogLevel::Warning:  levelStr = "WARNING"; break;
-    case Logger::LogLevel::Error:    levelStr = "ERROR"; break;
-    case Logger::LogLevel::Critical: levelStr = "CRITICAL"; break;
+    case Debug:    levelStr = "DEBUG"; break;
+    case Info:     levelStr = "INFO"; break;
+    case Warning:  levelStr = "WARNING"; break;
+    case Error:    levelStr = "ERROR"; break;
+    case Critical: levelStr = "CRITICAL"; break;
     }
+
     return QString("[%1] [%2] %3").arg(timestamp, levelStr, message);
 }
