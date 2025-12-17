@@ -48,7 +48,7 @@ ___
 ### Инструкция по сборке
 ```bash
 # Клонирование репозитория
-git clone <repository-url>
+git clone https://github.com/SosiskaKiller812/Coursework3semestr
 cd bus-management-system
 
 # Создание директории сборки
